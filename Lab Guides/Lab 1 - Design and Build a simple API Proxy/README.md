@@ -1,8 +1,8 @@
 ![](./media/image35.png)
 
-#Lab 1 – Design and Build a simple API Proxy
+# Lab 1 – Design and Build a simple API Proxy
 
-##Overview
+## Introduction
 
 ![](./media/image36.png)
 
@@ -21,7 +21,6 @@ Swagger).
 An API described via an OpenAPI spec document allows the API provider and
 the API consumer to agree on how the API behaves. It makes for quicker development and fewer surprises.
 
-
 ![](./media/image38.png)
 
 Apigee is a key contributing member of and has partnered with a number
@@ -32,22 +31,29 @@ This is a partial list of the tools that Apigee has created,
 open-sourced, or contributed to related to API-first design, OpenAPI
 spec, or API deployment:
 
--   [*apistudio.io*](http://apistudio.io/) - In-browser OpenAPI
+-   [*apistudio.io*](http://apistudio.io/)    
+In-browser OpenAPI
 IDE including live documentation, code generation, mocking, and
 cloud hosting.
 
--   [*A127*](https://github.com/apigee-127/a127-documentation/wiki) -  
+-   [*A127*](https://github.com/apigee-127/a127-documentation/wiki)   
 A toolkit for modeling and building rich, enterprise-class APIs in
 Node.js on your laptop.
 
--   [*swagger.io editor*](http://editor.swagger.io) -  
+-   [*swagger.io editor*](http://editor.swagger.io)   
 This editor is the basis for the ones used in the above two projects, but it
 also includes code generators for a number of other languages.
 
--   [https://github.com/anil614sagar/apigee2openapi]
+-  [apigee2openapi](https://github.com/anil614sagar/apigee2openapi)
+A tool that generates an OpenAPI spec document from an existing API Proxy
+defined in Apigee Edge. 
+
+
+# Tasks 
 
 * Review the OpenAPI specification hosted
-    [*here*](http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/#/)
+[*here*](http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/#/)
+
 ![](./media/image37.png)
 
 URL:
