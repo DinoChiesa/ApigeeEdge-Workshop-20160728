@@ -569,16 +569,18 @@ Let's explore that now.
 This is what Apigee calls "Smartdocs". Smart, interactive documentation. There
 are other API publishing mechanisms out there - for example there is a framework
 called Swagger-UI which will render OpenAPI specification documents into a
-single-page web app (SPA) with an accordion UI metaphor. This is really handy and simple.
+single-page web app (SPA) with an accordion UI metaphor. This is really handy
+and simple.
 
 One problem with using a single-page web app for documentation is SEO - search
 engine optimization.  When a developer searches for a term in your API
-documentation, s/he will be directed to the single page.  If you have 35
-resource+verb pairs rendered in accordions, the developer is forced to manually
-search to find the topic of interest.
+documentation, s/he will be directed to the single page. If you have 35
+resource+verb pairs rendered in accordions, the consumer developer will be
+forced to manually search to find the topic of interest.
 
-Smartdocs purposefully avoids that by rendering a unique, search-indexable page for each
-resource + verb pair in the API. This allows search to work properly.
+Smartdocs purposefully avoids that by rendering a unique, search-indexable page
+for each resource + verb pair in the API. This allows search to work properly,
+which makes it much nicer for developers.
 
 Smartdocs offers some other advantages - in particular it stores state in
 browser local storage, so that fields can be automatically re-populated if a
@@ -588,6 +590,20 @@ But there are a few extra steps when you publish Smartdocs. Therefore, the
 choice is up to you: you can choose Smartdocs, or Swagger-UI, or some other
 documentation rendering mechanism.  
 
+## Next Steps
+
+After rendering SmartDocs, the next step is to embed the links to these
+generated doc pages into the other pages of the developer portal.
+
+The links for your published SmartDocs will automatically be included into the
+index. Page.
+
+In the Developer Portal, click the APIs link in the top navbar, and you
+should see a page that shows the smartdocs.  You may wish to augment 
+that list with some other guidance information about the
+APIs available on your portal. 
+
+![](./media/list-of-documented-apis.png)
 
 ## Summary Notes
 
