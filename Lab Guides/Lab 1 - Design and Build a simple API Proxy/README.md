@@ -12,7 +12,7 @@ services who want to do something with them.
 
 Many API providers describe their
 APIs via informal mechanisms - for example a markdown document that shows typical requests and the responses. An alternative is to 
-formally specify a “contract” for the interface, which  describes all  of the requests and responses in an interface, in a standard, machine-readable format. This isn't a new idea; it's been used in interface description languages in many frameworks. Formal specification of an interface has its advantages: using the description, tools can generate server stubs, client libraries, testing harnesses. 
+formally specify a “contract” for the interface, which  describes all  of the requests and responses in an interface, in a standard, machine-readable format. This isn't a new idea; it's been used in interface description languages in many frameworks, ever since the first two programs were hooked together. Formal specification of an interface has its advantages: using the description, tools can generate server stubs, client libraries, testing harnesses. 
 
 There have been multiple proposed standards for describing APIs, but the most popular is called 
 [*OpenAPI Specification*](https://openapis.org/specification) . (The OpenAPI Specification was formerly known as
@@ -55,10 +55,9 @@ For the purposes of illustration, we've created a specification describing an AP
 
 ## Part 1: Brief Intro to OpenAPI Spec
 
-1. Review the OpenAPI specification hosted
-[*here*](http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/#/)
-**http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/\#/**
-
+1. Review the OpenAPI specification [document for the fictitious hotels service]
+(http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/#/)  
+http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/\#/
 ![](./media/image37.png)
 
 2. On the right side of the editor, in the documentation view, scroll
