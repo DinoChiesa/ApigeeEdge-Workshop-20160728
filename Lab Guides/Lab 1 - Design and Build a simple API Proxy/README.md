@@ -53,62 +53,102 @@ defined in Apigee Edge.
 
 For the purposes of illustration, we've created a specification describing an API that manages information about hotels. 
 
-* Review the OpenAPI specification hosted
+## Part 1: Brief Intro to OpenAPI Spec
+
+1. Review the OpenAPI specification hosted
 [*here*](http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/#/)
 **http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/\#/**
 
 ![](./media/image37.png)
 
-* On the right side of the editor, in the documentation view, scroll
+2. On the right side of the editor, in the documentation view, scroll
 down *about 65% of the page* to **GET /hotels** request.   Click the
-*Try this operation** button:
+**Try this operation** button:
 
 ![](./media/image40.png)
 * Click on Send Request and observe the response
 
 ![](./media/image39.png)
 
+This shows you the basics of apistudio, and how it helps you to explore a specification document. 
 
+3. Examine the left-hand-side of the browser page.  
+This markup is called YAML - for Yet Another Markup Language. But it is possible to specify OpenAPI Spec documents using JSON as well. 
+
+
+## Part 2: Create an API proxy in Apigee Edge
 
 Using that OpenAPI specification, let's create an API proxy in Apigee Edge.
 
 ![](./media/image42.png)
 
-Apigee Edge enables you to expose APIs that can be easily consumed by
+Apigee Edge enables you to expose and manage  PIs that can be easily consumed by
 developers who build apps. You expose APIs on Apigee Edge by building
-API proxies that act as managed 'facades' for backend services.
+API proxies that act as proxies or facades for backend services.
 
-You expose APIs on Apigee Edge by implementing *API proxies*. An API
-proxy is a bundle of XML configuration files and code (such as
-JavaScript and Java) that implements the facade for your backend HTTP
-services. API proxies decouple the developer-facing API from your
-backend services, shielding developers from code changes and enabling
-you to innovate at the edge without impacting internal applications and
-development teams. As development teams make backend changes, developers
+[Merriam Webster says](http://www.merriam-webster.com/dictionary/proxy) that a proxy is
+
+> the agency, function, or office of a deputy who acts as a substitute for another
+
+### The API Proxy Concept
+
+Within the domain of Apigee Edge, an API Proxy is something that acts as a substitute
+for the actual API implementation, sometimes called a "backend". Instead of clients directly connecting to a backend API, a client will connect to an API Proxy that runs in Apigee Edge, and Apigee Edge will connect to the backend API.
+
+*Why Proxy?* The proxy obviously adds an extra layer, an extra network hop. Why do it? By adding this layer,
+
+* ...you gain a level of control and insight into the inbound API requests. The proxy can verify security tokens, collect analytics information, serve requests from cache, perform traffic management, ... all without changing the backend API. 
+
+* ...you gain insight into the API usage.
+
+* you decouple the developer-facing API from the API exposed by 
+backend services. This brings several advantages:
+
+  * it shields "consumer developers" - those who are using the APIs - from changes in backend code or implementation.  As development teams make backend changes, consumer developers
 continue to call the same API without any interruption.
 
-API proxies manage request and response messages using a 'pipeline'
-processing model that defines 'Flows'. To customize the behavior of your
-API, you attach Policies to request and response Flows.
+  * it enables you, the API Provider, to innovate at the edge without impacting internal applications and
+development teams. Edge acts as a *service virtualization* layer. For example For example, you could convert an XML-based API to a JSON-based API just by introducing a few rules in the proxy configuration, without changing any backend code. You could introduce new services that compose multiple backend services. 
 
-In an API proxy configuration, there are two types of endpoints:
+In short, the API Proxy metaphor enables *API Management*.
 
--   **ProxyEndpoint:**
-    > This configuration manages interactions with apps
-    > that consume your API. You configure the ProxyEndpoint to define
-    > the URL of your API. You usually attach Policies to the
-    > ProxyEndpoint to enforce security, quota checks, and other types
-    > of access control and rate-limiting.
+### Describing an API Proxy 
 
--   **TargetEndpoint:**
-    > This configuration manages interactions with
-    > your backend services on behalf of consumer apps. You configure
-    > the TargetEndpoint to forward request messages to the proper
-    > backend service. You usually attach Policies to the TargetEndpoint
-    > to ensure that response messages are properly formatted for the
-    > app that made the initial request.
+In Apigee Edge, an API proxy is described by a set of configurations, usually specified in a bundle of XML configuration files.
+These configuration files will stipulate what inbound requests the proxy listens for (all of them?  just those on url path /v1/service ?), whether to use TLS (we hope so) and if so, which ciphers to use, whether to use caching, how to verify API keys, and so on.  All of these basic things
+can be done with simple configuration of Apigee Edge capabilities. No coding. 
 
-You can visualize API proxies as shown by the graphic below. A basic
+Apigee Edge also allows people to extend the capabilities with custom code. For example, if you would like to design an API Proxy that performs custom augmentation of the response received from the backend, you could do that by writing some JavaScript. 
+
+The configuration 
+and any custom code you provide (such as
+JavaScript and Java), hosted in Apigee Edge, implements the facade for your backend HTTP
+services.
+
+### How an API Proxy works in Apigee Edge
+
+API proxies in Apigee Edge manage request and response messages using a 'pipeline'
+processing model.  A request arrives in Edge, and according to the configuration you provide, a series of steps operates on the inbound message. Check for a key. Enforce a Quota, transform a message, and so on.  You customize the behavior of your
+API Proxy by attaching Policies (or logical processing steps) to request and response Flows.
+
+In an API proxy configuration, there are two types of *endpoints*:
+
+- **ProxyEndpoint**  
+This is the inbound endpoint. The configuration attached to the ProxyEndpoint manages requests arriving from apps
+that consume your API. You configure the ProxyEndpoint to define
+the base URL path of your API. You usually attach Policies to the
+ProxyEndpoint to enforce security, quota checks, and other types
+of access control and rate-limiting.
+
+- **TargetEndpoint**  
+This is the outbound endpoint. The configuration for the TargetEndpoint manages interactions with
+your backend services on behalf of consumer apps. You configure
+the TargetEndpoint to forward request messages to the proper
+backend service. You usually attach Policies to the TargetEndpoint
+to ensure that response messages are properly formatted for the
+app that made the initial request.
+
+See the graphic below, showing a basic
 request and response exchange between an app (HTTP client) and a backend
 service is managed in an API proxy by a ProxyEndpoint and
 TargetEndpoint.
