@@ -329,9 +329,12 @@ yourself.
 Developers build apps that access your APIs. When the developer registers an
 app, they receive one or more API keys; each key may get embedded into an app,
 to allow the app to access all of the API products associated with the
-app. Think of the key as "application credential" or a "client credential"; a thing that proves the identity of the app.
+app. Think of the key as "application credential" or a "client credential"; a
+thing that proves the identity of the app.
 
-Before getting keys, developers register themselves with the developer portal. The developer portal is the second of the two primary user interfaces for Apigee Edge.  
+Before getting keys, developers register themselves with the developer
+portal. The developer portal is the second of the two primary user interfaces
+for Apigee Edge.
 
 1. Ask your instructor for the URL for the developer portal. Visit that page in your browser. 
   On the developer portal home page, select **Register**:  
@@ -347,6 +350,16 @@ Before getting keys, developers register themselves with the developer portal. T
   ...then the developer portal administrator MUST approve the developer before
   the developer can sign in. If you see this message ask your instructor to
   approve your developer account - once that is done then login to the portal.
+
+  > NB: In some "closed" or "restricted" API programs, in which the consumer
+    developers are part of a known organization, it may be that you would like
+    to not require developers to register on the developer portal site. No
+    problem. The developer portal supports an external authentication - you can
+    use an external LDAP Server, SAML, OpenID Connect, or some other mechanism.
+
+    This could be used to give employees and trusted partners a "single sign on"
+    experience. They'd just visit the dev portal and would automatically be
+    recognized and authenticated. 
 
 3. Register an app from the developer portal.   
 
@@ -365,9 +378,9 @@ Before getting keys, developers register themselves with the developer portal. T
 
   ![](./media/hover-click-my-apps.png)
 
-5.  Click the **+ Add a new App** icon.
+5. Click the **+ Add a new App** icon.
 
-6)  Enter details for the application. You will want to select your own API Product.
+6. Enter details for the application. You will want to select your own API Product.
 
    The callback URL applies only with APIs that require 3-legged OAuth. We're not
    using that in this exercise, so you can leave the callback URL blank.  In
@@ -385,7 +398,6 @@ Before getting keys, developers register themselves with the developer portal. T
   Once again, this is something you would hide if the API Product didn't need it. 
 
   ![](./media/image41.png)
-
 
 8. Check the API Product and key in the Edge Administrative UI.
 
@@ -417,7 +429,8 @@ Before getting keys, developers register themselves with the developer portal. T
 
   b. From the devportal tab, copy (Ctrl-C) the Consumer Secret string. 
   
-  c. From Postman send the ‘/GET hotels’ request, with the following query parameters: `zipcode=98101&radius=200&apikey={apikey portal}`
+  c. From Postman send the ‘/GET hotels’ request, with the following query parameters:  
+  `zipcode=98101&radius=200&apikey={apikey portal}`
 
   d. You should see a successful response.
 
@@ -425,43 +438,95 @@ Before getting keys, developers register themselves with the developer portal. T
     You should see the call be rejected. 
 
 
-xxx
+This demonstrates a marvelous capability of the Developer Portal.  Developers
+can *self-provision* keys for APIs, and can get started invoking those APIs
+immediately.
 
-**Generate API Documentation**
+The API Publishing team can, at their discretion, configure the developer portal
+to require manual approval for key requests. And, it's also possible to require
+manual approval for some APIs, and automatic approval for others.
 
-1) Create a model
+The Apigee Edge developer portal also supports role-based access to API
+products, so that not all developers would see all API products.
 
-When you create a model, it's stored in your Edge organization as the
-source for the API structure. For more information, see [*About SmartDoc
-models and
-templates*](http://apigee.com/docs/developer-services/content/using-smartdocs-document-apis#models).
+There's great flexibility in the developer portal, and it ought to be suited to
+your needs for publishing APIs, whether your requirements are simple or complex.
 
-&nbsp;&nbsp;a.  Ask you instructor to change your developer user to have administrator access in the portal. Logout and then back in to the developer portal.
 
-&nbsp;&nbsp;b.  Select **Content > SmartDocs** in the Drupal administration menu.
 
-> ![](./media/image42.png)
+## Part 6: Publishing API Documentation
 
-&nbsp;&nbsp;c.  Select **New model** at the top of the page
+We have seen how developers can self-provision keys.  But what about showing
+developers the documentation for the APIs, so they know how to invoke them?
+Let's explore that now. 
 
-&nbsp;&nbsp;d.  Enter the following fields:<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;- **Name**: The model name that will be displayed across the site.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;- **Internal name**: As you type the **Name**, the internal name displays. The internal name for the model that must be unique among all models.  The internal name must contain only lowercase letters, numbers, and hyphens with no spaces. Select **Edit** to edit this name.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;- **Description**: A description of the model.
 
-> ![](./media/image43.png)
+1. Get Authorized
 
-2)  Select **Create Model**.
+  When you registered on the developer portal, you were assuming the persona of
+  a "consumer developer".  To publish API Documentation on the portal, you need
+  to be recognized by the devportal as part of the API Publishing team.
 
-3)  Click on ‘Import’ to import an API specification
+  So, as a first step, Ask your instructor to change your developer user to have
+  administrator access in the devportal.
 
-![](./media/image44.png)
+2. In the browser tab showing the developer portal, Logout.  And then Signin again.
 
-&nbsp;&nbsp;a.  The API specification can be of Swagger 1.2, Swagger 2.0 (JSON or YAML) or WADL formats. In this example, we will use Swagger 2.0 – YAML.<br/>
-Open the **hotels-openapi.yaml** file from the lab material in a text editor and change the {baas_org} on line 14 to match your baas org and save the file.<br/>
+  You will now notice a black navigation bar at the top of the browser page.
+  This is the administrative menu; it is visible only to users who are
+  authenticated as administrators on the site. 
+
+3. Create a model
+
+  A model is a description of the API. We have the OpenAPI Spec document that
+  describes the API.  Now you'll publish that to the developer portal. 
+
+  a. Using the black navbar at the top of the page, select
+    **Content &gt; SmartDocs** . 
+
+    ![](./media/content-smartdocs.gif)
+
+  b. Select **New model** at the top of the page. 
+
+    When you create a model, it's stored in your Edge organization as the source
+    for the API structure. For more information, see [*About SmartDocs models and
+    templates*](http://apigee.com/docs/developer-services/content/using-smartdocs-document-apis#models).
+
+  c. Enter the following fields:
+  
+    * **Name**: The model name that will be displayed across the site. Use your initials as a prefix here.
+
+      NB: As you type the **Name**, the internal name
+      displays. The internal name for the model that must be unique among all
+      models. The internal name must contain only lowercase letters, numbers,
+      and hyphens with no spaces. Select **Edit** to edit this name if you
+      wish. You probably don't want to.
+    
+    * **Description**: A description of the model. This will be seen by Consumer Developers,
+      so it's helpful to briefly describe what the API is all about. 
+
+      ![](./media/image43.png)
+
+  d. Click **Create Model**
+
+  This creates a named API model, but there's no description attached to that name, just yet. 
+
+
+4. On the resulting page, click on ‘Import’ to import an API specification. 
+
+5. The API specification can be provided in one of several formats. In this
+  exercise, we will use **OpenAPI – YAML**. Select that option.
+
+6. Download the [hotels-openapi.yaml](../../Resources/hotels-openapi.yaml) file to your workstation.
+
+7. Open that file in a text editor and change the basePath on line 14 to match the base path of your API proxy. Example: `/v1/dpc_hotels`
+
+
+6. Back in the developer portal, Click browse to select the YAML file to upload.
+  ![](./media/browse-for-yaml-file.png)
+  
+
 Back in the dev portal administrator, select the **hotels-openapi.yaml** file
-
-> ![](./media/image45.png)
 
 &nbsp;&nbsp;b.  Click on ‘**Import’**
 

@@ -11,7 +11,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 host: api.usergrid.com
-basePath: /{baas_org}/sandbox
+basePath: /v1/initials_hotels
 tags:
   - name: hotel
     description: Everything about Hotels
