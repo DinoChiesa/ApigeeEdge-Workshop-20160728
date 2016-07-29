@@ -2,6 +2,9 @@
 
 This is the supporting material for a hands-on workshop that introduces develoeprs to  Apigee Edge. 
 
+All of the material here is released under the [Apache 2.0 license](LICENSE)
+
+
 ## Agenda
 
 ### Presentation : 20 mins
