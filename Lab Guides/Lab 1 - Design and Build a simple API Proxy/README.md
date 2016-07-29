@@ -41,7 +41,7 @@ A toolkit for modeling and building rich, enterprise-class APIs in
 Node.js on your laptop.
 
 -   [*swagger.io editor*](http://editor.swagger.io)   
-This editor is the basis for the ones used in the above two projects, but it
+This web-based editor is the basis for the ones used in the above two projects, but it
 also includes code generators for a number of other languages.
 
 -  [apigee2openapi](https://github.com/anil614sagar/apigee2openapi)
@@ -51,66 +51,26 @@ defined in Apigee Edge.
 
 # Tasks 
 
+For the purposes of illustration, we've created a specification describing an API that manages information about hotels. 
+
 * Review the OpenAPI specification hosted
 [*here*](http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/#/)
+**http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/\#/**
 
 ![](./media/image37.png)
 
-URL:
-[**http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/\#/**](http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/#/)
 * On the right side of the editor, in the documentation view, scroll
-    down to **GET /hotels** in the Responses section and click the
-    **Try this operation** button:
+down *about 65% of the page* to **GET /hotels** request.   Click the
+*Try this operation** button:
 
 ![](./media/image40.png)
 * Click on Send Request and observe the response
 
 ![](./media/image39.png)
 
-<span id="h.ri196vnobha9" class="anchor"></span>
 
-<span id="h.taxf7mg56g7i" class="anchor"></span>
 
-<span id="h.9ddvbj8nje1v" class="anchor"></span>
-
-<span id="h.qbkgkio5afee" class="anchor"></span>
-
-<span id="h.6j2psa9o20kh" class="anchor"></span>
-
-<span id="h.c6w5qinvupcv" class="anchor"></span>
-
-<span id="h.7ve1sjs0bon0" class="anchor"></span>
-
-<span id="h.a8zygxesjjz8" class="anchor"></span>
-
-<span id="h.g77ek3cdlzm8" class="anchor"></span>
-
-<span id="h.rm65z2uqdf3" class="anchor"></span>
-
-<span id="h.av6qdfi52u2i" class="anchor"></span>
-
-<span id="h.ermic3uixxpo" class="anchor"></span>
-
-<span id="h.w8ph4t27ck7" class="anchor"></span>
-
-<span id="h.3yftbpoomngl" class="anchor"></span>
-
-<span id="h.c7ixffplrrqd" class="anchor"></span>
-
-<span id="h.lzupkhsl58d9" class="anchor"></span>
-
-<span id="h.rbobw5d2pdaw" class="anchor"></span>
-
-<span id="h.1soutc89zxew" class="anchor"></span>
-
-<span id="h.nym5pasqbemf" class="anchor"></span>
-
-<span id="h.m2oesdy59f8i" class="anchor"></span>
-
-<span id="h.lmooryntc5mx" class="anchor"></span>Now that we have the
-OpenAPI specification, let's create an API proxy in Apigee Edge.
-
-<span id="h.gjdgxs" class="anchor"></span>
+Using that OpenAPI specification, let's create an API proxy in Apigee Edge.
 
 ![](./media/image42.png)
 
