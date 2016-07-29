@@ -61,11 +61,12 @@ A tool that generates an OpenAPI spec document from an existing API Proxy
 defined in Apigee Edge. 
 
 
-# Tasks 
+## Part 1: Brief Intro to OpenAPI Spec
 
 For the purposes of illustration, we've created a specification describing an API that manages information about hotels. 
 
-## Part 1: Brief Intro to OpenAPI Spec
+
+**Estimated Time: 8 mins**
 
 1. Review the OpenAPI specification [document for the fictitious hotels service]
 (http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/#/)  
@@ -173,47 +174,59 @@ environment](http://apigee.com/docs/api-services/content/using-apigee-edge-devel
 
 ## Note
 
-Some API teams build APIs using Design-First approach where they start
-with creating a Swagger (OpenAPI) document. Some of them happen to have
-many existing back-end services/APIs & they prefer a Build-First
-approach which starts with building an API proxy in Apigee Edge. This
-lab shows you how to build proxies.
+Some API teams build APIs using Design-First approach: they start by
+creating an OpenAPI
+([f.k.a.](http://www.urbandictionary.com/define.php?term=FKA)
+Swagger) document, experimenting with it in a designer tool, before
+generating code.
+
+Most teams typically have many existing back-end services and APIs
+and they prefer a Build-First approach: They simply create the API
+Proxy and its configuration, right within Apigee Edge. This lab
+shows you the steps involved in this latter approach. We've already
+got the OpenAPI specification document, so we won't be creating it.
 
 
-###Estimated Time: 15 mins
+## Part 3: Brief Intro to OpenAPI Spec
 
-* Creating an API Proxy for a backend service that you want to expose requires you to provide the network address for the backend service, along with some information that API Services uses to model the API that will be exposed to developers.
-    * Open up a browser tab and log in to [*http://enterprise.apigee.com*](http://enterprise.apigee.com)
-    *  From the Organization drop-down in the top-right corner, select the organization assigned to you.
-    *  From the Environment drop-down, select **test**
-    *  From the main menu, select APIs → API Proxies
+**Estimated Time: 15 mins**
 
- > ![](./media/image45.png)
+Creating an API Proxy for a backend service that you want to expose
+requires you to provide the base network address for the backend service,
+along with the HTTP verbs and resource paths you would like to 
+expose to "consumer developers".
 
-    * To create a new API proxy, select the + API Proxy button to add a new proxy.
 
- > ![](./media/image43.png)
+1. Open up a browser tab and log in to [*http://enterprise.apigee.com*](http://enterprise.apigee.com)
 
-    * On the New API Proxy form that is displayed, provide information needed to generate an API proxy. Select **Reverse Proxy** and click on **Use OpenAPI** -
+2. From the Organization drop-down in the top-right corner, select the organization assigned to you.
 
- > ![](./media/image44.png)
+3. From the Environment drop-down, select **test**
 
-    * Put in the URL:
-   [*http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/spec*](http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/spec)[](http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/spec)
-   [](http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/spec) and click on ***apply*** and then hit ***next***
+4. From the main menu, select APIs → API Proxies  
+![](./media/image45.png)
 
- > ![](./media/image46.png)
+5. To create a new API proxy, select the + API Proxy button to add a new proxy.  
+![](./media/image43.png)
 
-    * Enter Proxy details
+6. On the New API Proxy form that is displayed, provide information needed to generate an API proxy. Select **Reverse Proxy** and click on **Use OpenAPI**  
+![](./media/image44.png)
 
- > ![](./media/image34.png)
+7. Paste in the URL for the OpenAPI Specification document :
+   [*http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/spec*](http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/spec)
+   
+8. Click on ***apply*** and then hit ***next***
+![](./media/image46.png)
 
+9. Enter Proxy details
     > Proxy Name: **{your\_initials}\_hotels**
     >
     > Project Base Path: **/v1/{your\_initials}\_hotels**
     >
     > Existing API:
     > **https://api.usergrid.com/{your-BaaS-org}/sandbox**
+![](./media/image34.png)
+
 
 **Note**: Replace **{your-BaaS-org}** with the actual name of your API BaaS organization. Replace **{your-initials}** with the initials of your name.
 
@@ -279,6 +292,6 @@ Once you've entered these details hit next.
 
 Review the response returned by the proxy. It should be the same response as the one you observed when using the **Trace** tool in the Management UI. Switch to the **Trace** tab of the Apigee Edge Management UI and click on the **Stop Trace** button.
 
-##Summary
+## Summary
 
-That completes this hands-on lesson. Simple and quick, but you learned the fundamentals of how to create an API Proxy, how to deploy and undeploy it to/from an environment, and how to trace the proxy flow. Throughout the rest of the hands-on labs you will be working with this Management UI to add policies to proxies, testing and tracing these proxies, and learning about the power of the Apigee Edge platform.
+That completes this hands-on lesson. Simple and quick. You learned the fundamentals of how to create an API Proxy, how to deploy and undeploy it to/from an environment, and how to trace the proxy flow. Throughout the rest of the hands-on labs you will be working with this Management UI to add policies to proxies, testing and tracing these proxies, and learning about the power of the Apigee Edge platform.
