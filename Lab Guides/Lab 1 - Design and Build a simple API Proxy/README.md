@@ -198,10 +198,10 @@ Creating an API Proxy for a backend service that you want to expose
 requires you to provide to Apigee Edge:
 
 * the base network address for the backend service,
-* the HTTP verbs and resource paths
-you would like to expose to "consumer developers", and
+* the HTTP verbs and resource paths you would like to expose to "consumer developers", and
 * a few other bits and bobs of information 
 
+Steps: 
 
 1. Open up a browser tab and log in to [*http://enterprise.apigee.com*](http://enterprise.apigee.com)
 
@@ -213,7 +213,7 @@ you would like to expose to "consumer developers", and
 ![](./media/image45.png)
 
 5. To create a new API proxy, select the + API Proxy button to add a new proxy.  
-![](./media/image43.png)
+![](./media/Plus-API-Proxy.png)
 
 6. On the New API Proxy form that is displayed, provide information needed to generate an API proxy. Select **Reverse Proxy** and click on **Use OpenAPI**  
 ![](./media/image44.png)
