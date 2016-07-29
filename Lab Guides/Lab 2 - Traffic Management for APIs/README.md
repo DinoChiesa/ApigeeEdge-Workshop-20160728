@@ -338,20 +338,35 @@ You should see something like the following:
 
 ### For Extra Credit:
 
+* Modify the Spike Arrest to be 10ps. Now that we've demonstrated its
+  behavior, we don't need it to be so intrusive.
+
 * Use the EdgeUI to examine the cache resources available in the Environment.  
   ![](./media/nav-to-environment-configuration.png)
 
   You should see something like this:
   ![](./media/env-named-cache-resources.png)
   
-  Then, return to your Proxy, and modify the ResponseCache policy to
-  explicitly use one of the available named cache resources.  hint: see [the
-  documentation for the ResponseCache policy](http://apigee.com/docs/api-services/reference/response-cache-policy). It might have something to do with adding an element like this to the configuration:
-  ```
-    <CacheResource>name_of_cache_resource</CacheResource>
-  ```
+  Create a named cache resource with your initials. Then, return to your
+  Proxy, and modify the ResponseCache policy to explicitly use that named
+  cache resource.  hint: see [the documentation for
+  the ResponseCache
+  policy](http://apigee.com/docs/api-services/reference/response-cache-policy). It
+  might have something to do with adding an element like this to the
+  configuration: ```
+  <CacheResource>name_of_cache_resource</CacheResource> ```
 
-  Verify the behavior with 10 second TTL is now changed.
+  Verify the behavior with 10 second TTL is now changed. Another thing
+  to try: reset the TTL in the policy to 3600, and then run a few
+  requests from Postman.  Verify that the cache is hot. Return to the
+  cache management page, and clear the cache you created.  Then return
+  to Postman, and run a new request.  You should see that the cache is
+  cold.
+
+  Keep in mind that all of the administrative actions you can perform in
+  the Edge UI can also be performed via an administrative API. So you
+  could set up an agent to clear the Edge cache based on a slack
+  command, or running as a cron job, or part of a CI/CD flow, and so on.
 
 
 ## Summary
