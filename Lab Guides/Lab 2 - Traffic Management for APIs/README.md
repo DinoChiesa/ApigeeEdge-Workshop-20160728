@@ -124,11 +124,24 @@ The various caching policies supported by Apigee Edge are:
 
 5. Click on Proxy Endpoints &gt; PreFlow.  
 ![](./media/click-proxy-endpoints-preflow.png)
-  Each proxy has a number of different places at which developers can attach policies. You can specify that your policies will run during request processing, or during response processing - *Request flow* or *Response flow* in Apigee parlance. For each of those, you can set up conditions to apply policies to a subset of cases - for example a condition will typically match a url path and verb.  `GET /hotels` might have a conditional flow.  There is also a "preflow" and "postflow" which are 
 
+  Each proxy has a number of different places at which developers can
+  attach policies. You can specify that your policies will run during
+  request processing, or during response processing - *Request flow* or
+  *Response flow* in Apigee parlance. For each of those, you can set up
+  conditions to apply policies to a subset of cases - for example a
+  condition will typically match a url path and verb.  `GET /hotels`
+  might have a conditional flow. There is also a "preflow" and
+  "postflow" which act like wildcards - the policies attached here will
+  run all requests on this proxy, before or after any conditional flow,
+  respectively.
 
 6. Click on `+ Step` on the Request Flow.  
 ![](./media/proxy-add-a-step.png)
+
+  By doing this, you are adding a policy step that will run in the
+  Request Pre-flow. It will run for all inbound requests.
+
 
 7. Select the ‘Spike Arrest’ policy with the following properties:
 
