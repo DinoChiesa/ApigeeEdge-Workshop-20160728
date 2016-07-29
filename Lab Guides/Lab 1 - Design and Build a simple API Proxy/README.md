@@ -225,12 +225,12 @@ http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/spec
 ![](./media/image46.png)
 
 9. Enter Proxy details  
-**Note**: In the following, replace **{your-initials}** with the initials of your name. Replace  **{your-BaaS-org}** with the actual name of your API BaaS organization.
+**Note**: In the following, replace **{your-initials}** with the initials of your name. 
   * **Proxy Name**: **{your\_initials}\_hotels**
   * **Project Base Path**: **/v1/{your\_initials}\_hotels**
   * **Existing API**: **https://api.usergrid.com/dino/workshop**
 
-10. Verify that it looks mostly like this: 
+10. Verify that it looks mostly like this, except with **YOUR** initials in place of dpc: 
 ![](./media/Build-a-Proxy.png)
 
 11. click next.
@@ -247,11 +247,13 @@ http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/spec
 15. Ensure that only the **test** environment is selected to deploy to and click **Build and Deploy**. 
 ![](./media/image06.png)
 
-16. Once it has built and deployed click the link to view your proxy in the proxy editor.
+16. Once it has built and deployed click the link to view your proxy in the proxy editor. You should see something like this:
+![](./media/API-Proxy-Summary.png)
 
 *Congratulations!* You have now built a pass-through API Proxy for an existing backend service.
 
 This shows you the interactive experience, building a proxy using the Apigee Edge Administrative UI. 
+
 
 ## Part 4: Test your proxy
 
@@ -263,6 +265,7 @@ rest of the labs.
 ![](./media/Launch-Postman.png)
 
 2. If you have not already done so, within Postman, import [the collection used in this workshop](../../Resources/postman-DevJam-2.1.json).
+![](./media/Postman-Import.png)
 
 2. Select the **DevJam 2.0** environment.
 ![](./media/image30.png)
