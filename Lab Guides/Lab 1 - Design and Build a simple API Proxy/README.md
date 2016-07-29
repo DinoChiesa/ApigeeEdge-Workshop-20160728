@@ -11,7 +11,7 @@ how to use the Trace capabilities in the Management UI.
 
 ## Prerequisites
 
-- Postman tool installed and **DevJam 2.0** bundle imported.
+- Postman tool installed, with [the **DevJam 2.0** collection](../../Resources/postman-DevJam-2.1.json) imported.
 
 
 ## Introduction
@@ -43,30 +43,30 @@ This is a partial list of the tools that Apigee has created,
 open-sourced, or contributed to related to API-first design, OpenAPI
 spec, or API deployment:
 
--   [*apistudio.io*](http://apistudio.io/)    
-In-browser OpenAPI
-IDE including live documentation, code generation, mocking, and
-cloud hosting.
+- [*apistudio.io*](http://apistudio.io/)  
+In-browser OpenAPI IDE including live documentation, code
+generation, mocking, and cloud hosting.
 
--   [*A127*](https://github.com/apigee-127/a127-documentation/wiki)   
+- [*A127*](https://github.com/apigee-127/a127-documentation/wiki)   
 A toolkit for modeling and building rich, enterprise-class APIs in
 Node.js on your laptop.
 
--   [*swagger.io editor*](http://editor.swagger.io)   
-This web-based editor is the basis for the ones used in the above two projects, but it
-also includes code generators for a number of other languages.
+- [*swagger.io editor*](http://editor.swagger.io)  
+This web-based editor is the basis for the ones used in the above
+two projects, but it also includes code generators for a number of
+other languages.
 
--  [apigee2openapi](https://github.com/anil614sagar/apigee2openapi)
-A tool that generates an OpenAPI spec document from an existing API Proxy
-defined in Apigee Edge. 
+- [apigee2openapi](https://github.com/anil614sagar/apigee2openapi)  
+A tool that generates an OpenAPI spec document from an existing API
+Proxy defined in Apigee Edge.
 
 
-## Part 1: Brief Intro to OpenAPI Spec
+## Part 1: A Brief Introduction to OpenAPI Spec
 
 For the purposes of illustration, we've created a specification describing an API that manages information about hotels. 
 
 
-**Estimated Time: 8 mins**
+**Estimated Time: 6 minutes**
 
 1. Review the OpenAPI specification [document for the fictitious hotels service]
 (http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/#/)  
@@ -86,15 +86,14 @@ This shows you the basics of the online apistudio tool, and how it helps you to 
 This markup is called YAML - for Yet Another Markup Language. But it is possible to specify OpenAPI Spec documents using JSON as well. Explore the structure of the specification.  You don't have to learn it, but it is nice to understand what's possible. 
 
 
-## Part 2: Create an API proxy in Apigee Edge
+## Part 2: About API proxies in Apigee Edge
 
-Using that OpenAPI specification, let's create an API proxy in Apigee Edge.
+**Estimated Time: 6 minutes (reading)**
 
-![](./media/image42.png)
-
-Apigee Edge enables you to expose and manage  PIs that can be easily consumed by
-developers who build apps. You expose APIs on Apigee Edge by building
-API proxies that act as proxies or facades for backend services.
+Apigee Edge enables you to expose and manage APIs that can be easily
+consumed by developers who build apps. You expose APIs on Apigee
+Edge by building API proxies that act as proxies or facades for
+backend services.
 
 ### The API Proxy Concept
 
@@ -189,12 +188,19 @@ got the OpenAPI specification document, so we won't be creating it.
 
 ## Part 3: Building your first API Proxy in Apigee Edge
 
-**Estimated Time: 7 mins**
+**Estimated Time: 7 minutes**
+
+Using that OpenAPI specification, let's create an API proxy in Apigee Edge.
+
+![](./media/image42.png)
 
 Creating an API Proxy for a backend service that you want to expose
-requires you to provide the base network address for the backend service,
-along with the HTTP verbs and resource paths you would like to 
-expose to "consumer developers".
+requires you to provide to Apigee Edge:
+
+* the base network address for the backend service,
+* the HTTP verbs and resource paths
+you would like to expose to "consumer developers", and
+* a few other bits and bobs of information 
 
 
 1. Open up a browser tab and log in to [*http://enterprise.apigee.com*](http://enterprise.apigee.com)
@@ -243,7 +249,7 @@ http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/spec
 
 16. Once it has built and deployed click the link to view your proxy in the proxy editor.
 
-Congratulations! You have now built a pass-through API Proxy for an existing backend service.
+*Congratulations!* You have now built a pass-through API Proxy for an existing backend service.
 
 This shows you the interactive experience, building a proxy using the Apigee Edge Administrative UI. 
 
@@ -255,6 +261,9 @@ to invoke our proxy and continue to use **Postman** throughout the
 rest of the labs.
 
 1. Launch **Postman**
+![](./media/Launch-Postman.png)
+
+2. If you have not already done so, import [the collection used in this workshop](../../Resources/postman-DevJam-2.1.json).
 
 2. Select the **DevJam 2.0** environment.
 ![](./media/image30.png)
@@ -266,6 +275,7 @@ rest of the labs.
 
 5. Observe the lovely response!
 
+6. For extra credit, you can try invoking the API proxy from other tools, like curl, or RESTclient, etc. 
 
 ## Part 5: Deployment
 
