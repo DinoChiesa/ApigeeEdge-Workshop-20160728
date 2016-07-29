@@ -171,17 +171,18 @@ be the case. Let's check it out.
 2. Start the Trace session for the ‘**{your\_initials}**\_hotels’
 proxy. 
 
-3. Use your Postman client to send a `/GET hotels` request. Use the following query parameters: `zipcode=98101&radius=200`
+3. Use your Postman client to send a `/GET hotels` request. Use the following
+  query parameters: `zipcode=98101&radius=200`
 
 4. In Postman, examine the response. The following fault is returned
   since an API Key has not been provided as a request query parameter:
 
   ```json
   {
-    fault: {
-      faultstring: "Failed to resolve API Key variable request.queryparam.apikey",
-      detail: {
-        errorcode: "steps.oauth.v2.FailedToResolveAPIKey"
+    "fault": {
+      "faultstring": "Failed to resolve API Key variable request.queryparam.apikey",
+      "detail": {
+        "errorcode": "steps.oauth.v2.FailedToResolveAPIKey"
       }
     }
   }
@@ -189,11 +190,20 @@ proxy.
 
   The above response shows that the API Key Verification policy is being enforced as expected.
 
-5. Return to the Trace screen in the Edge UI.  Click through the
-  transaction, and you will see that the Verify API Key policy is
+5. Use your Postman client to send another `/GET hotels` request. Use the following
+  query parameters: `zipcode=98101&radius=200&apikey=abcdefg`
+
+  This passes an invalid API Key. Examine the response in Postman. It's similar, but not the same. 
+  
+  NB: It is possible to customize the fault messages that are sent back by Apigee Edge
+  when a key is not present, or is invalid. 
+
+
+6. Return to the Trace screen in the Edge UI.  Click through the
+  transactions, and you will see that the Verify API Key policy is
   returning the fault, as expected. 
 
-6. Stop the Trace session for the proxy
+7. Stop the Trace session for the proxy
 
 Before we can check the positive case, in which the Verify API Key
 policy succeeds, we need to issue an API Key. And for that, we need an
@@ -269,10 +279,23 @@ Now, let's create an API Product within Apigee Edge.
   So far, it should look like this:
   ![](./media/new-api-product-step-1.png)
 
-4. Scroll down and click "+ APIProxy"
+4. Scroll down and click "+ API Proxy"
   ![](./media/new-apiproduct-add-a-proxy.png)
 
+5. In the dropdown, select YOUR api proxy, the one named with your initials. 
+
 5. Click **Save** to save the API Product. The new product should now be listed on the ‘Products’ page.
+
+
+You noticed the UI for adding resources, so let's explain a little about proxies
+and resources.  Suppose you had an API Proxy that handled requests on /hotels
+and /attractions . We call these things "resources" in the lingo of REST. You
+could configure an API Product to allow access to a subset of the resources
+available within a proxy. To do so, you would use those other parts of the User
+Interface.
+
+This is a more advanced topic, and we won't explore it further in this exercise. 
+
 
 
 ## Part 5: The Developer Portal
