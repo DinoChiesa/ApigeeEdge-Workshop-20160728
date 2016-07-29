@@ -277,37 +277,61 @@ rest of the labs.
 ![](./media/Postman-select-project.png)
 
 4. Select and send the **/GET hotels** request.
-![](./media/image31.png)
+![](./media/Postman-send-request.png)
 
 5. Observe the lovely response!
 
-6. For extra credit, you can try invoking the API proxy from other tools, like curl, or RESTclient, etc. 
+6. For extra credit, you can try invoking the API proxy from other tools, like curl, or RESTclient, etc.
+
 
 ## Part 5: Deployment
 
-In Apigee Edge, when you "deploy" an API Proxy, you make its configuration active. Apigee Edge begins listening for inbound requests on the base URL path you specified, and when such requests arrive, any policy steps you've provided in the proxy configuration will be executed. The proxy will then call the configured backend system, and when the response arrives, it will run the configured policies in the response flow. 
+In Apigee Edge, when you "deploy" an API Proxy, you make its
+configuration active. Apigee Edge begins listening for inbound
+requests on the base URL path you specified, and when such requests
+arrive, any policy steps you've provided in the proxy configuration
+will be executed. The proxy will then call the configured backend
+system, and when the response arrives, it will run the configured
+policies in the response flow.
 
-> NB: In the proxy you've just created, there were no policies, which is why we called it a "pass-through proxy". But even so, it will act as a proxy - it will receive an inbound call, and then make an outbound call on behalf of the client. 
+> NB: In the proxy you've just created, there were no policies,
+  which is why we called it a "pass-through proxy". But even so, it
+  will act as a proxy - it will receive an inbound call, and then
+  make an outbound call on behalf of the client.
 
-Undeploying a proxy does the converse: it instructs Apigee Edge to stop listening for inbound requests as configured in the proxy definition. The "New API Proxy" wizard automatically deploys new proxies, if you select an environment. 
+Undeploying a proxy does the converse: it instructs Apigee Edge to
+stop listening for inbound requests as configured in the proxy
+definition. The "New API Proxy" wizard automatically deploys new
+proxies, if you select an environment.
 
 
-Deploying and Undeploying a Proxy** to a given environment from the Management UI is simple too.
+**Deploying or Undeploying a Proxy** to a given environment from the
+Management UI is simple.
 
-1. Back in the Edge UI, Click on the **Deploy** drop-down on the API Proxy page.
+1. Back in the Edge UI, Click on the **Deployment** drop-down on the API Proxy page.
 ![](./media/image50.png)
 
-2. Notice that the proxy we just created is deployed to the **test** environment.
+2. Notice that the proxy we just created is shown with a green dot  next to the **test** environment. This indicates that the proxy is deployed to test. 
 
-3. Click on the **test** environment name. This undeploys the proxy from the **test** environment.
+3. Click on the **test** environment name. Click "Undeploy" in the resulting confirmation box. This undeploys the proxy from the **test** environment. If you again select the Deploy dropdown, the green dot has become a grey dot. 
 
-4. Return to the Postman tool. Invoke the same request again.  You should now see that the request fails, indicating that Apigee Edge is not listening for that in-bound request.
+4. Return to the Postman tool. Invoke the `GET /hotels` request again.  You should now see that the request fails, "Unable to identify proxy for host".  This indicates that Apigee Edge is not listening for that in-bound request.
 
-5. Return to the Edge UI.  Click on the **Deploy** drop-down again
-and select the **test** environment. This re-deploys the proxy to
+5. Return to the Edge UI.  Click on the **Deployment** drop-down again
+and select the **test** environment. This again deploys the proxy to
 the **test** environment.
 
-6. Again, back to Postman. Invoke the same request again. It works. 
+6. Again, back to Postman. Invoke the `GET /hotels` request again. The request works. 
+
+
+Things to consider:
+
+* What's an environment? An environment is a runtime execution context for the API proxies in an organization. You must deploy an API proxy to an environment before it can be accessed. You can deploy an API proxy to a single environment or to multiple environments.
+
+An organization can contain multiple environments. For example, you might define a "dev", "test", and "prod" environment in an organization. For more on environments, see [the Apigee Edge documentation](http://docs.apigee.com/api-services/content/apigee-edge-organization-structure). 
+
+* It is possible to customize the error message that Apigee Edge returns when responding to an unknown request.  You can do this with a proxy that listens on the basepath of / . 
+
 
 
 ## Part 6: Tracing
