@@ -282,14 +282,14 @@ Now, let's create an API Product within Apigee Edge.
 4. Scroll down and click "+ API Proxy"
   ![](./media/new-apiproduct-add-a-proxy.png)
 
-5. In the dropdown, select YOUR api proxy, the one named with your initials. 
+5. In the dropdown, select *your* API proxy, the one named with your initials. 
 
 5. Click **Save** to save the API Product. The new product should now be listed on the ‘Products’ page.
 
 
 You noticed the UI for adding resources, so let's explain a little about proxies
-and resources.  Suppose you had an API Proxy that handled requests on /hotels
-and /attractions . We call these things "resources" in the lingo of REST. You
+and resources.  Suppose you had an API Proxy that handled requests on `/hotels`
+and `/attractions` . We call these things "resources" in the lingo of REST. You
 could configure an API Product to allow access to a subset of the resources
 available within a proxy. To do so, you would use those other parts of the User
 Interface.
@@ -302,77 +302,130 @@ This is a more advanced topic, and we won't explore it further in this exercise.
 
 **Estimated Time: 4 minutes**
 
-Developer portals with social publishing features are increasingly being used
-for communication with the developer community. This includes communicating
-static content, such as API documentation and terms-of-use, as well as dynamic
-community-contributed content such as blogs and forums.
+Developer portals with social publishing features are used to enaable and engage
+the community of developers that consume the APIs you expose. The idea is to
+provide an immersive developer experience, so people can use a developer-oriented website to:
 
-As an API provider, you need a way to expose your APIs, educate developers about
-your APIs, sign up developers, and let developers register apps. Exposing your
-APIs to developers is only part of creating a truly dynamic community. You also
-need a way for your developer community to provide feedback, make support and
-feature requests, and submit their own content that can be accessed by other
-developers.
+* understand the APIs available
+* quickly learn how to use them, via interactive documentation
+* self-provision access (get keys)
+* obtain sample code
+* network with each other. Ask and answer questions, share suggestions and working code. 
+
+A developer portal may also publish static content, such as API documentation
+and terms-of-use, as well as dynamic community-contributed content like blogs
+and forums.
+
+To fulfill the promise of APIs - which is more apps being built more quickly,
+more experimentation and more iteration, API Publishers need a way to expose
+APIs, educate developers about APIs, sign up developers, and so on. And it's
+better to configure a pre-built developer portal rather than try to build one
+yourself.
 
 ![](./media/image61.png)
 
-**Developers**
+### Configuring the Developer Portal
 
-Developers access your APIs through apps. When the developer registers an app, they receive a single API key that allows them to access all of the API products associated with the app. However, developers must be registered before they can register an app.
+Developers build apps that access your APIs. When the developer registers an
+app, they receive one or more API keys; each key may get embedded into an app,
+to allow the app to access all of the API products associated with the
+app. Think of the key as "application credential" or a "client credential"; a thing that proves the identity of the app.
 
-**Register a developer from the developer portal**
+Before getting keys, developers register themselves with the developer portal. The developer portal is the second of the two primary user interfaces for Apigee Edge.  
 
-1)  Ask your instructor for the URL for the developer portal. On the developer portal home page select **Register**
+1. Ask your instructor for the URL for the developer portal. Visit that page in your browser. 
+  On the developer portal home page, select **Register**:  
+  ![](./media/devportal-register.png)
 
-> ![](./media/image62.png)
+2. Enter the required information and click **Create new account**. Depending on
+  the new account registration settings, when the new account is created, you
+  could be sent an automated welcome email.
 
-2)  The registration page appears
+  **NOTE**: If you see this message:  
+  ![](./media/image64.png)
 
-> ![](./media/image63.png)
+  ...then the developer portal administrator MUST approve the developer before
+  the developer can sign in. If you see this message ask your instructor to
+  approve your developer account - once that is done then login to the portal.
 
-3)  Enter the required information and select **Create new account**. Depending on the new account registration settings, when the new account is created, you could be sent an automated welcome email.
+3. Register an app from the developer portal.   
 
-**NOTE**: If you see this message:
+  Developers register apps to access your API products. When a developer
+  registers an app, the developer selects the API products to associate with the
+  app and Edge generates an API key. Each app has at least one API key that provides
+  access to all API products associated with the app.
+  
+  Apps allow you to control who can access your APIs. You can revoke an app's
+  key, preventing it from accessing all API products. Or you can revoke access
+  to a single API product associated with the app.
+  
+  ![](./media/image65.png)
 
-> ![](./media/image64.png)
+4.  Select **My apps** below your username in the login menu
 
-Then the developer portal administrator MUST approve the developer
-before the developer can sign in. If you see this message ask your instructor to approve your developer account - once that is done then login to the portal.
+  ![](./media/hover-click-my-apps.png)
 
-**Register an app from the developer portal:**
+5.  Click the **+ Add a new App** icon.
 
-Developers register apps to access your API products. When a developer registers an app, the developer selects the API products to associate with the app and Edge generates an API key. Each app has a single API key that provides access to all API products associated with the app.
+6)  Enter details for the application. You will want to select your own API Product.
 
-Apps allow you to control who can access your APIs. You can revoke an app's key, preventing it from accessing all API products. Or you can revoke access to a single API product associated with the app.
+   The callback URL applies only with APIs that require 3-legged OAuth. We're not
+   using that in this exercise, so you can leave the callback URL blank.  In
+   a finished devportal, you would probably suppress that field for API Products
+   that don't require it. 
 
-![](./media/image65.png)
+   After you're finished, click **Create App**.
 
-4)  Select **My apps** below your username in the login menu
+7. When the app is created, you'll see a widget on the screen with the name of the app.
+  Click it to open an accordion that shows the details of the app, including the
+  Consumer Key (aka API Key) and Consumer Secret.
 
-> ![](./media/image66.png)
+  The Consumer Secret is required only when the API uses
+  OAuth 2.0. We're not doing that in this exercise, so you won't need it. 
+  Once again, this is something you would hide if the API Product didn't need it. 
 
-5)  Click the **+ Add a** **new App** icon.
+  ![](./media/image41.png)
 
-> ![](./media/image39.png)
 
-6)  Enter details for the application and hit **Create App**
+8. Check the API Product and key in the Edge Administrative UI.
 
-> ![](./media/image40.png)
+  a. Return to the browser tab that shows the Edge Administrative UI.
 
-> NOTE: Select the product that you created in the previous step.
+  b. Use the top navbar to click Publish... Products
 
-7)  Open your new app to view the Consumer Key (aka API Key) and Consumer Secret (aka
-    API Secret)
+  c. Click the link for *your* API product.
 
-> ![](./media/image41.png)
+  d. In the resulting page, scroll down. You should see an App listed for that product.
+     This indicates that a developer has registered an app for the given product.
 
-8)  Test the API
+     ![](./media/scroll-to-see-apps.gif)
 
-&nbsp;&nbsp;a.  Start the Trace session for the ‘**{your\_initials}\_hotels**’ proxy
 
-&nbsp;&nbsp;b.  Now that the API Key Verification policy has been added to the proxy, try and send a test ‘/GET hotels’ request from Postman with the following query parameters: **zipcode=98101&radius=200&apikey={apikey from the dev portal}**
+9. Click the link for the app listed there. You will see the details for the app
+  that was just registered by a developer on the devportal site.
 
-> Note: Replace the URL of hotels API with **{your\_initials}**\_hotel
+  ![](./media/developer-app-details.png)
+
+
+10. Test the API.
+
+  Now that you have a valid API Key, you should be able to test the behavior of
+  the Verify API Key policy.
+  
+  a. Return to the Edge UI.  Be sure to select your API Proxy. Click the Trace tab.
+     Then Start a Trace session for your proxy.
+
+  b. From the devportal tab, copy (Ctrl-C) the Consumer Secret string. 
+  
+  c. From Postman send the ‘/GET hotels’ request, with the following query parameters: `zipcode=98101&radius=200&apikey={apikey portal}`
+
+  d. You should see a successful response.
+
+  e. Now change the API key - add or remove a character or two. Invoke the request again.
+    You should see the call be rejected. 
+
+
+xxx
 
 **Generate API Documentation**
 
