@@ -1,0 +1,104 @@
+{
+	"id": "dd43f075-5402-a81b-d19a-2f4d4d649139",
+	"name": "Apigee Edge Workshop 20160726",
+	"description": "",
+	"order": [
+		"773a5409-d217-5696-b486-6cae4bcc445a",
+		"768c3534-7a10-24c5-f80c-9cf698696fb8",
+		"4bf61ea3-f5be-56f5-698f-9bdefa4d60a8"
+	],
+	"folders": [],
+	"timestamp": 1434532061761,
+	"owner": "2578",
+	"public": false,
+	"published": false,
+	"requests": [
+		{
+			"id": "4bf61ea3-f5be-56f5-698f-9bdefa4d60a8",
+			"headers": "",
+			"url": "https://{{org}}-{{env}}.apigee.net/oauth/client_credentials/accesstoken",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "client_id",
+					"value": "pah9lOG6fJPt7Do1dmixmkwW0I3t0ATG",
+					"type": "text"
+				},
+				{
+					"key": "client_secret",
+					"value": "LtBMl8HVDHbk2uH9",
+					"type": "text"
+				},
+				{
+					"key": "grant_type",
+					"value": "client_credentials",
+					"type": "text"
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1469764660448,
+			"name": "/POST OAuth Token - Client Cred",
+			"description": "",
+			"collectionId": "dd43f075-5402-a81b-d19a-2f4d4d649139"
+		},
+		{
+			"id": "768c3534-7a10-24c5-f80c-9cf698696fb8",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://{{org}}-{{env}}.apigee.net/v1/{{initials}}_hotels/hotels",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1469764764310,
+			"name": "/GET hotels",
+			"description": "",
+			"collectionId": "dd43f075-5402-a81b-d19a-2f4d4d649139",
+			"responses": []
+		},
+		{
+			"id": "773a5409-d217-5696-b486-6cae4bcc445a",
+			"headers": "Authorization: Bearer {access_token}\nContent-Type: application/x-www-form-urlencoded\n",
+			"url": "http://{{org}}-{{env}}.apigee.net/v1/{{initials}}_hotelspro/hotels?zipcode=98101&radius=200",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [
+				{
+					"key": "client_id",
+					"value": "3aCTANZ1AUAXTfKKpumJFQwthzl4QGM2",
+					"type": "text"
+				},
+				{
+					"key": "client_secret",
+					"value": "vs3E2G2hZW1WQY5I",
+					"type": "text"
+				},
+				{
+					"key": "grant_type",
+					"value": "client_credentials",
+					"type": "text"
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1469764773036,
+			"name": "/GET hotelspro",
+			"description": "",
+			"collectionId": "dd43f075-5402-a81b-d19a-2f4d4d649139"
+		}
+	]
+}

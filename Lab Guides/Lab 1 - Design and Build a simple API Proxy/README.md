@@ -264,8 +264,11 @@ rest of the labs.
 1. Launch **Postman**
 ![](./media/Launch-Postman.png)
 
-2. If you have not already done so, within Postman, import [the collection used in this workshop](../../Resources/postman-DevJam-2.1.json).
+2. If you have not already done so, within Postman, import [the collection used in this workshop](../../Resources/Apigee-Edge-Workshop-20160726.postman_collection). To do so, you need to save that file from github to your local workstation, then import the saved file from your workstation or laptop. 
 ![](./media/Postman-Import.png)
+
+3. If you have not already done so, within Postman, import [the environment](../../Resources/Workshop-20160726.postman_environment). To do so, you need to save that file from github to your local workstation, then import the saved file from your workstation or laptop. 
+![](./media/Postman-environment-import.gif)
 
 2. Select the **DevJam 2.0** environment.
 ![](./media/image30.png)
