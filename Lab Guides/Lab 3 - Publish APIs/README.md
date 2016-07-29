@@ -40,7 +40,7 @@ of a developer to an app and to an API:
 
 ![](./media/image47.png)
 
-**Estimated Time: 8 minutes**
+**Estimated Time: 5 minutes**
 
 1. Go to the Apigee Edge Management UI browser tab.
 
@@ -50,7 +50,7 @@ of a developer to an app and to an API:
 3. From the list of proxies, Click the name of *your* API proxy.
 
 4. Click on the develop tab
-> ![](./media/cap500-select-develop-tab.png)
+![](./media/cap500-select-develop-tab.png)
 
 5. Click on Proxy Endpoints -> PreFlow
 ![](./media/click-request-preflow.png)
@@ -61,13 +61,14 @@ of a developer to an app and to an API:
   You will see the familiar modal dialog:
   ![](./media/modal-add-a-step.png)
   
-7. Select the ‘Verify API Key’ policy, and click the "Add" button. 
+7. Scroll down and Select the **Verify API Key** policy, and click the "Add" button. 
 
-  The ‘Verify API Key’ policy will get added after the ‘Response Cache’
+  You will then be back in the Develop page.  You will see that **Verify
+  API Key** policy has been added after the ‘Response Cache’
   policy. Like so:
   ![](./media/policy-ordering-1.png)
 
-  **Click-and-Drag** the ‘Verify API Key’ policy to move it so
+  **Click-and-Drag** the **Verify API Key** policy to move it so
   that it appears before the ResponseCache policy. 
   ![](./media/click-and-drag-VAK.gif)
 
@@ -76,7 +77,6 @@ of a developer to an app and to an API:
   scenario, we verify the API Key before the Response Cache policy to
   ensure that an API Consumer whose API Key may have been revoked is not
   able to get the data from the cache.
-
 
 8. Ensure you have the correct policy selected. Your view should be like so:
 ![](./media/ensure-correct-policy-selection.png)
@@ -88,154 +88,208 @@ of a developer to an app and to an API:
       <APIKey ref="request.queryparam.apikey"/>
   </VerifyAPIKey>
   ```
-(You can cut-and-paste the above into the policy XML editor)
+  
+  (You can cut-and-paste the above into the policy XML editor)
 
-Note the &lt;APIKey&gt; element, which identifies where the policy
-should check for the API key. In this example, the policy looks for
-the API key in a query parameter named 'apikey'. API keys can be
-located in a query parameter, a form parameter, or an HTTP header.
-Apigee Edge provides a message variable for each type of location. For
-policy reference information, see [Verify API Key
-policy](http://apigee.com/docs/api-services/reference/verify-api-key-policy)[.](http://apigee.com/docs/api-services/reference/verify-api-key-policy)[](http://apigee.com/docs/api-services/reference/verify-api-key-policy)
+  Note the `&lt;APIKey&gt;` element, which identifies where the policy
+  should check for the API key. In this example, the policy looks for
+  the API key in a query parameter named 'apikey'. API keys can be
+  located in a query parameter, a form parameter, or an HTTP header.
+  You need only to use a difference expression to reference an apikey in these different locations.
+  For example, `request.header.key` or `request.formparam.apikey`. Also, it doesn't have to be named "apikey". Name it whatever you like. 
 
-2)  **Removing the API Key from the query parameters**
+  For more, see [the documentation on the Verify API Key
+  policy](http://apigee.com/docs/api-services/reference/verify-api-key-policy).
 
-&nbsp;&nbsp;a.  Click on “+ Step” on the Request Flow
 
-> ![](./media/image53.png)
+## Part 2: Removing the API Key from the query string
 
-&nbsp;&nbsp;b.  Select ‘Assign Message’ policy with the following properties:
+**Estimated Time: 3 minutes**
 
-&nbsp;&nbsp;&nbsp;&nbsp;i.  Policy Display Name: **Remove APIKey QP**<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;ii. Policy Name: **Remove-APIKey-QP**
+Apigee Edge acts as an http proxy.  If all of the traffic management and key
+verification policies pass, then a *copy of* the inbound request is sent
+to the backend. This includes all of the headers and query parameters
+that were originally sent in.  In many cases you'd like to modify the
+copy of the request message before it gets proxied to the backend -
+for example, you may wish to inject a header with some client
+information.  In this case, we will remove information from the
+request; we will remove the API Key.  The API Key should be considered
+a secret, and need not be sent to the backend. 
 
-> ![](./media/image58.png)
 
-&nbsp;&nbsp;c.  The ‘Remove APIKey QP’ policy will get added after the ‘Response Cache’ policy. **Drag and move** the ‘Remove APIKey QP’ policy to be before the ‘Response Cache’ policy
+1. In the API Proxy Editor, Click on “+ Step” on the Request Pre-Flow.  
+  ![](./media/proxy-editor-add-another-step.png)
 
-![](./media/image56.png)
+2. From the modal, scroll and select the ‘Assign Message’ policy. Click
+  "Add". You will now see something like the following:  
+  ![](./media/proxy-with-four-policies.png)
 
-&nbsp;&nbsp;d.  **Save** the configuration
 
-&nbsp;&nbsp;e.  For the ‘Remove APIKey QP’ policy, change the XML configuration of the policy using the 'Code' panel as follows:
+3. Click-and-drag the AssignMessage policy so that it appears before the
+  Response Cache policy:  
+  ![](./media/click-and-drag-AM.gif)
 
-  ```
-  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-  <AssignMessage async="false" continueOnError="false" enabled="true" name="Remove-APIKey-QP">
-  <DisplayName>Remove APIKey QP</DisplayName>
-  <Remove>
-  <QueryParams>
-  <QueryParam name="apikey"></QueryParam>
-  </QueryParams>
-  </Remove>
-  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
-  <AssignTo createNew="false" transport="http" type="request"/>
+3. Now, verify that you have selected the appropriate policy.  
+  ![](./media/ensure-correct-policy-selection-2.png)
+
+4. Replace the policy XML for the AssignMessage policy with the following:
+  ```xml
+  <AssignMessage name="Remove-APIKey-QP">
+    <DisplayName>Remove APIKey QP</DisplayName>
+    <Remove>
+      <QueryParams>
+        <QueryParam name="apikey"></QueryParam>
+      </QueryParams>
+    </Remove>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="request"/>
   </AssignMessage>
   ```
+  
+  This tells Apigee Edge to remove the queryparam "apikey" from the copy
+  of the request message that will be sent to the backend.  You could
+  also use this policy to remove other information, or to insert
+  information into the request. 
+    
+7. **Save** the API proxy configuration.  
+  ![](./media/click-to-save.png)
 
-(You can find the policy xml
-[*here*](https://gist.github.com/prithpal/cbf66ee17b9afe75fdf2). Click
-the “Raw” button and copy/paste into your policy editor).
 
-As a security measure, the ‘Remove APIKey QP’ policy simply removes
-the ‘apikey’ query parameter from the HTTP request message attached to
-the flow so it is not sent to the backend service. In this scenario we
-are removing the ‘apikey’ immediately after verify API Key policy, but
-depending on your use case, removing the ‘apikey’ may need to be done
-at a later stage in the flow.
+## Part 3: Testing API Key Verification
 
-3)  **Testing the API Key Verification Policy**
+**Estimated Time: 4 minutes**
 
-Until now anyone with the URL to the ‘{your\_initials}\_hotel’ API
-Proxy has been able to make a request with appropriate parameters and
-get a response back. Now that you have added the API Key Verification
-policy, that will no longer be the case.
+Until now anyone with the URL to the ‘{your\_initials}\_hotel’ API Proxy
+has been able to make a request and get a valid response back (assuming
+appropriate input parameters like zipcode and range, of course). Now
+that you have added the API Key Verification policy, that will no longer
+be the case. Let's check it out.
 
-&nbsp;&nbsp;a.  Start the Trace session for the ‘**{your\_initials}**\_hotels’ proxy
+1. In the Edge UI, select the Trace tab.
+![](./media/click-to-select-trace-tab.png)
 
-&nbsp;&nbsp;b.  Now that the API Key Verification policy has been added to the proxy, try and send a test ‘/GET hotels’ request from Postman with the following query parameters: **zipcode=98101&radius=200**
+2. Start the Trace session for the ‘**{your\_initials}**\_hotels’
+proxy. 
 
-**Note**: Replace the URL of hotels API with **{your\_initials}**\_hotels
+3. Use your Postman client to send a `/GET hotels` request. Use the following query parameters: `zipcode=98101&radius=200`
 
-&nbsp;&nbsp;c.  You will notice that the following fault is returned since an API Key has not been provided as a request query parameter:
+4. In Postman, examine the response. The following fault is returned
+  since an API Key has not been provided as a request query parameter:
 
-  ```
+  ```json
   {
-  fault: {
-  faultstring: "Failed to resolve API Key variable request.queryparam.apikey",
-  detail: {
-  errorcode: "steps.oauth.v2.FailedToResolveAPIKey"
-  }
-  }
+    fault: {
+      faultstring: "Failed to resolve API Key variable request.queryparam.apikey",
+      detail: {
+        errorcode: "steps.oauth.v2.FailedToResolveAPIKey"
+      }
+    }
   }
   ```
 
-The above response shows that the API Key Verification policy is being enforced as expected.
+  The above response shows that the API Key Verification policy is being enforced as expected.
 
-&nbsp;&nbsp;d.  Review the Trace for the proxy and the returned response to ensure that the flow is working as expected.
+5. Return to the Trace screen in the Edge UI.  Click through the
+  transaction, and you will see that the Verify API Key policy is
+  returning the fault, as expected. 
 
-&nbsp;&nbsp;e.  Stop the Trace session for the proxy
+6. Stop the Trace session for the proxy
 
-**API Products**
+Before we can check the positive case, in which the Verify API Key
+policy succeeds, we need to issue an API Key. And for that, we need an
+API Product. 
 
-API products enable you to bundle and distribute your APIs to multiple developer groups simultaneously, without having to modify code. An API product consists of a list of API resources (URIs) combined with a Service Plan (rate-limiting policy settings) plus any custom metadata required by the API provider. API products provide the basis for access control in Apigee, since they provide control over the set of API resources that apps are allowed to consume.
+
+## Part 4: API Products
+
+**Estimated Time: 4 minutes**
+
+In Apigee Edge, the API Product  is the unit of exposure.  You should
+think of API Proxies as the *unit of execution* and API Products as the *unit of
+exposure*.  The Proxy is where you define which operations should occur on
+requests and responses. The Product is the thing that consuming developers
+get authorization for. 
+
+A simple way to think of an API Product is as a bundle of one or more API
+Proxies, along with some meta-data.  For example, the metadata might include a
+quota threshold, or a cache lifetime, or a list of data fields to include or
+exclude from the response. 
+
+API products enable you to bundle and distribute your APIs to multiple classes
+of developer (eg, Gold, SIlver, Bronze) simultaneously, without having to modify
+code. An API product consists of a list of API resources (URIs) combined with a
+Service Plan (rate-limiting policy settings) plus any custom metadata required
+by the API provider. API products provide the basis for access control in
+Apigee, since they provide control over the set of API resources that apps are
+allowed to consume.
 
 ![](./media/image57.png)
 
-As part of the app provisioning workflow, developer selects from a list of API products. This selection of an API product is usually made in the context of a developer portal. The developer app is provisioned with a key and secret (generated by and stored on Apigee Edge) that enable the app to access the URIs bundled in the selected API product. To access API resources bundled in an API product, the app must present the API key issued by Apigee Edge. Apigee Edge will resolve the key that is presented against an API product, and then check associated API resources and quota settings.
+As part of the app provisioning workflow, a developer selects from a list of API
+products. This selection of an API product is usually made in the context of a
+developer portal. The developer app is provisioned with a key and secret
+(generated by and stored on Apigee Edge) that enable the app to access the URIs
+bundled in the selected API product. To access API resources bundled in an API
+product, the app must present the API key issued by Apigee Edge. Apigee Edge
+will resolve the key that is presented against an API product, and then check
+associated API resources and quota settings.
 
-The API supports multiple API products per app key - your developers can consume multiple API products without requiring multiple keys. Also, a key can be 'promoted' from one API product to another. This enables you to promote developers from 'free' to 'premium' API products seamlessly and without user interruption.
+The API supports multiple API products per app key - your developers can consume
+multiple API products without requiring multiple keys. Also, a key can be
+'promoted' from one API product to another. This enables you to promote
+developers from 'free' to 'premium' API products seamlessly and without user
+interruption. They can continue to use the same key. 
 
 The following table defines some of the terms used to register apps
 and generate keys:
 
-***API product***   A bundle of API proxies combined with a service plan that sets limits on access to those APIs. API products are the central mechanism that Apigee Edge uses for authorization and access control to your APIs. For more, see [API Products](http://apigee.com/docs/developer-services/content/what-api-product)[](http://apigee.com/docs/developer-services/content/what-api-product)
+| Entity      | Description |
+| :---------  | :--------   |
+| API product | A bundle of API proxies combined with a service plan that sets limits on access to those APIs, as well as other metadata. API products are the central mechanism that Apigee Edge uses for authorization and access control to your APIs. For more, see [API Products](http://apigee.com/docs/developer-services/content/what-api-product) |
+| Developer   | The API consumer. Developers write apps the make requests to your APIs. The developer gets authorization to use one or more *API Products*. |
+| App         | A client-side app that a developer registers to access an API product. Registering the app with the API product generates the API key for accessing the APIs in that product. |
+| API key     | An opaque string that is generated and stored by Apigee Edge. This key is shared between the app developer and Edge. The app typically sends the API key in with each request, to allow Edge to verify the request. The key is a secret. The API key is generated when a registered app is associated with an API product. |
 
-***Developer***     The API consumer. Developers write apps the make requests to your APIs.
+Now, let's create an API Product within Apigee Edge. 
 
-***App***            A client-side app that a developer registers to access an API product. Registering the app with the API product generates the API key for accessing the APIs in that product.
+1. From the Apigee Edge Management UI, click the upper navbar to Publish → Products
+![](./media/navigate-to-API-Products.png)
 
-***API key***       A string with authorization information that a client-side app uses to access the resources exposed by the API product. The API key is generated when a registered app is associated with an API product.
+2. Click on ‘+ Product’ button to add a new API Product
+![](./media/click-to-add-api-product.png)
 
-**Publishing an API Product**
+3. In the ‘Product Details’ section of the new product screen, enter or select the following values for the various fields:
 
-1)  From the Apigee Edge Management UI, go to Publish → Products
+  * Display Name: **{Your_Initials}_Hospitality Basic Product**
+  * Description: **API Bundle for a basic Hospitality App.**
+  * Environment: **test**
+  * Access: **Public**
+  * Key Approval Type: **Automatic**
 
-2)  Click on ‘+ Product’ button to add a new product
+  So far, it should look like this:
+  ![](./media/new-api-product-step-1.png)
 
-3)  In the ‘Product Details’ section of the new product screen, enter or select the following values for the various fields:
+4. Scroll down and click "+ APIProxy"
+  ![](./media/new-apiproduct-add-a-proxy.png)
 
-&nbsp;&nbsp;a.  Display Name: **{Your_Initials}_Hospitality Basic Product**<br/>
-&nbsp;&nbsp;b.  Description: **API Bundle for a basic Hospitality App.**<br/>
-&nbsp;&nbsp;c.  Environment: **Test**<br/>
-&nbsp;&nbsp;d.  Access: **Public**<br/>
-&nbsp;&nbsp;e.  Key Approval Type: **Automatic**
+5. Click **Save** to save the API Product. The new product should now be listed on the ‘Products’ page.
 
-![](./media/image59.png)
 
-4)  In the ‘Resources’ section select the following values for the
-    various fields:
+## Part 5: The Developer Portal
 
-&nbsp;&nbsp;a.  API Proxy: **{your\_initial}\_hotels **<br/>
-&nbsp;&nbsp;b.  Revision: **1**<br/>
-&nbsp;&nbsp;c.  Resource Path: **/**
+**Estimated Time: 4 minutes**
 
-> ![](./media/image60.png)
+Developer portals with social publishing features are increasingly being used
+for communication with the developer community. This includes communicating
+static content, such as API documentation and terms-of-use, as well as dynamic
+community-contributed content such as blogs and forums.
 
-5)  Click on **‘Import Resources’** to add the **‘/’** resource of your proxy to the API product
-
-6)  Repeat the above two steps for the **‘/\*\*’** resource
-
-7)  Click **‘Save’** to save the API Product**.** The new product should now be listed on the ‘Products’ page.
-
-**Developer Portal**
-
-Developer portals with social publishing features are increasingly being used for communication with the developer community. This includes communicating static content, such as API documentation and
-terms-of-use, as well as dynamic community-contributed content such as blogs and forums.
-
-As an API provider, you need a way to expose your APIs, educate
-developers about your APIs, sign up developers, and let developers
-register apps. Exposing your APIs to developers is only part of creating a truly dynamic community. You also need a way for your developer community to provide feedback, make support and feature requests, and submit their own content that can be accessed by other developers.
+As an API provider, you need a way to expose your APIs, educate developers about
+your APIs, sign up developers, and let developers register apps. Exposing your
+APIs to developers is only part of creating a truly dynamic community. You also
+need a way for your developer community to provide feedback, make support and
+feature requests, and submit their own content that can be accessed by other
+developers.
 
 ![](./media/image61.png)
 
