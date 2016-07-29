@@ -341,9 +341,17 @@ You should see something like the following:
 * Use the EdgeUI to examine the cache resources available in the Environment.  
   ![](./media/nav-to-environment-configuration.png)
 
+  You should see something like this:
+  ![](./media/env-named-cache-resources.png)
+  
   Then, return to your Proxy, and modify the ResponseCache policy to
-  explicitly use one of the available named cache resources.  Verify the
-  behavior with 10 second TTL is now changed.
+  explicitly use one of the available named cache resources.  hint: see [the
+  documentation for the ResponseCache policy](http://apigee.com/docs/api-services/reference/response-cache-policy). It might have something to do with adding an element like this to the configuration:
+  ```
+    <CacheResource>name_of_cache_resource</CacheResource>
+  ```
+
+  Verify the behavior with 10 second TTL is now changed.
 
 
 ## Summary
