@@ -222,7 +222,7 @@ successfully to the ‘test’ environment.
 
 ## Part 2: Adding a Response Cache
 
-**Estimated Time: 6 minutes**
+**Estimated Time: 10 minutes**
 
 Now we'll introduce the ResponseCache policy.  
 
@@ -306,13 +306,12 @@ You should see something like the following:
   ![](./media/Postman-success-1.png)
 
 16. Wait for 6 to 10 seconds, to avoid the Spike Arrest policy from
-stopping your requests) and send the same request again from
-Postman. You should see a faster response this time.
+  stopping your requests) and send the same request again from
+  Postman. You should see a faster response this time.
 
 17. Go back to the Edge UI, in the Trace view and review the transaction
-map of both the requests including the overall elapsed time to process
-both requests.
-
+  map of both the requests including the overall elapsed time to process
+  both requests.
 
   The first transaction map will show you that the request was proxied
   to the backend. It should look as follows:
@@ -328,6 +327,24 @@ both requests.
   other policies. Since no request is sent to the target service, the
   overall transaction time has also dropped significantly. This can also
   increase concurrency at high transaction rates.
+
+
+**Questions:**
+
+* Suppose you modified the ResponseCache policy to have a TTL of 10 seconds.  Then, suppose you sent new requests in.  At this point, Would you expect the cache to be re-filled every 10 seconds?  Explain.
+
+* What would you need to do in order to allow an administrator the ability to clear the cache?
+
+
+### For Extra Credit:
+
+* Use the EdgeUI to examine the cache resources available in the Environment.  
+  ![](./media/nav-to-environment-configuration.png)
+
+  Then, return to your Proxy, and modify the ResponseCache policy to
+  explicitly use one of the available named cache resources.  Verify the
+  behavior with 10 second TTL is now changed.
+
 
 ## Summary
 
