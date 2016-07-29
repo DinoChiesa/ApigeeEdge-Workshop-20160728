@@ -527,34 +527,82 @@ Let's explore that now.
 8. Back in the developer portal, Click browse to select the YAML file - the one
   you just modified - to upload.  
   ![](./media/browse-for-yaml-file.png)
+
+  Click **Import**
+
+9. On the resulting page, you have the option to selectively include or exclude
+  particular operations from the generated documentation.  We want to publish complete
+  documentation here, so, select all, and click Render and Publish. 
+
+  ![](./media/smartdocs-render-and-publish.gif)
+  
+  This will create documentation pages for the OpenAPI Specification. 
   
 
-Back in the dev portal administrator, select the **hotels-openapi.yaml** file
+10. After the rendering completes, click on ‘View API Documentation’ to see the
+  published documentation.  
+  ![](./media/view-api-docs.png)
 
-&nbsp;&nbsp;b.  Click on ‘**Import’**
+11. This displays an index page for all of the resource + verb pairs that were
+  defined in your OpenAPI specification document.
+  
+  The styling for this index page is configurable.
 
-&nbsp;&nbsp;c.  Select all the Operations//Methods that should be published (we will select all)
+12. Click on **hotels-get**
 
-> ![](./media/image33.png)
+  You will see a form that allows you to invoke the API interactively from
+  within the browser. Fill out the form. 
+  
+  a. You can leave the radius and zipcode parameters empty, or you can specify
+    values that are appropriate there. 
 
-&nbsp;&nbsp;d.  Click on ‘**Update**’
+  b. Enter ‘**application/json**’ as the Content-Type.
 
-&nbsp;&nbsp;e.  Click on ‘View API Documentation’ to see the published documentation
+  c. Specify the apikey that you obtained as a developer. You can find it via the
+    Edge Administrative UI, if necessary. 
 
-> ![](./media/image34.png)
+  d. Click on ‘**Send this request**’
 
-&nbsp;&nbsp;f.  Click on ‘**hotels-get**’
+    You will now see a display of the request that gets sent, and the response
+    received.
 
-> ![](./media/image35.png)
+This is what Apigee calls "Smartdocs". Smart, interactive documentation. There
+are other API publishing mechanisms out there - for example there is a framework
+called Swagger-UI which will render OpenAPI specification documents into a
+single-page web app (SPA) with an accordion UI metaphor. This is really handy and simple.
 
-&nbsp;&nbsp;g.  Enter ‘**application/json**’ as the Content-Type. Leave the radius and zipcode empty
+One problem with using a single-page web app for documentation is SEO - search
+engine optimization.  When a developer searches for a term in your API
+documentation, s/he will be directed to the single page.  If you have 35
+resource+verb pairs rendered in accordions, the developer is forced to manually
+search to find the topic of interest.
 
-&nbsp;&nbsp;h.  Click on ‘**Send this request**’
+Smartdocs purposefully avoids that by rendering a unique, search-indexable page for each
+resource + verb pair in the API. This allows search to work properly.
 
-> ![](./media/image36.png)
+Smartdocs offers some other advantages - in particular it stores state in
+browser local storage, so that fields can be automatically re-populated if a
+developer returns to the same API documentation.
 
-**Summary**
+But there are a few extra steps when you publish Smartdocs. Therefore, the
+choice is up to you: you can choose Smartdocs, or Swagger-UI, or some other
+documentation rendering mechanism.  
 
-In this exercise, you learnt about how API keys can be used as an
-application identifier, how APIs can be packaged in the form of
-Products. You also saw how to publish API documentation to the developer portal and finally, how developers are onboarded and how developer applications are registered.
+
+## Summary Notes
+
+In this exercise, you learned:
+
+* how API keys can be used as an application
+identifier, or client credential.
+
+* how APIs can be packaged into API Products.
+
+* the purpose and function of the Apigee Edge  developer portal
+
+* how developers are onboarded and how developer applications are registered.
+
+* how to publish API documentation to the developer portal
+
+* How the interactive documentation called "Smartdocs" works
+
