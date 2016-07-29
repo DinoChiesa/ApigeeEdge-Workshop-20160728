@@ -11,8 +11,7 @@ how to use the Trace capabilities in the Management UI.
 
 ## Prerequisites
 
-- Postman tool installed, with [the **DevJam 2.0** collection](../../Resources/postman-DevJam-2.1.json) imported.
-
+- Google's [Postman tool](https://www.getpostman.com/) installed on your workstation, or something equivalent to send REST API Requests.
 
 ## Introduction
 
