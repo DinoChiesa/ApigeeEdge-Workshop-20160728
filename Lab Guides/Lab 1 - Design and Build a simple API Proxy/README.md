@@ -270,10 +270,11 @@ rest of the labs.
 3. If you have not already done so, within Postman, import [the environment](../../Resources/Workshop-20160726.postman_environment). To do so, you need to save that file from github to your local workstation, then import the saved file from your workstation or laptop. 
 ![](./media/Postman-environment-import.gif)
 
-2. Select the **DevJam 2.0** environment.
-![](./media/image30.png)
+2. Select the Workshop-20160726 environment.
+![](./media/Postman-select-environment.png)
 
-3. Open the **DevJam 2.0** project
+3. Select the **Apigee Edge Workshop 20160726**  project
+![](./media/Postman-select-project.png)
 
 4. Select and send the **/GET hotels** request.
 ![](./media/image31.png)
