@@ -187,9 +187,9 @@ shows you the steps involved in this latter approach. We've already
 got the OpenAPI specification document, so we won't be creating it.
 
 
-## Part 3: Brief Intro to OpenAPI Spec
+## Part 3: Building your first API Proxy in Apigee Edge
 
-**Estimated Time: 15 mins**
+**Estimated Time: 7 mins**
 
 Creating an API Proxy for a backend service that you want to expose
 requires you to provide the base network address for the backend service,
@@ -238,12 +238,46 @@ http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/spec
 14. Select only the **default** virtual host (http only) and Click next
 ![](./media/image49.png)
 
-15. Ensure that only the **test** environment is selected to deploy to and click **Build and Deploy**. Once it has built and deployed click the link to view your proxy in the proxy editor.
+15. Ensure that only the **test** environment is selected to deploy to and click **Build and Deploy**. 
 ![](./media/image06.png)
 
-xxxxx
+16. Once it has built and deployed click the link to view your proxy in the proxy editor.
 
-* **Deploying and Undeploying a Proxy** to a given environment from the Management UI is simple too.
+Congratulations! You have now built a pass-through API Proxy for an existing backend service.
+
+This shows you the interactive experience, building a proxy using the Apigee Edge Administrative UI. 
+
+
+## Part 4: Test your proxy
+
+At this point, we will start to use the **Postman** tool as a client
+to invoke our proxy and continue to use **Postman** throughout the
+rest of the labs.
+
+1. Launch **Postman**
+
+2. Select the **DevJam 2.0** environment.
+![](./media/image30.png)
+
+3. Open the **DevJam 2.0** project
+
+4. Select and send the **/GET hotels** request.
+![](./media/image31.png)
+
+5. Observe the lovely response!
+
+
+## Part 5: Deploying API Proxies
+
+In Apigee Edge, when you "deploy" an API Proxy, you make its configuration active. Apigee Edge begins listening for inbound requests on the base URL path you specified, and when such requests arrive, any policy steps you've provided in the proxy configuration will be executed. The proxy will then call the configured backend system, and when the response arrives, it will run the configured policies in the response flow. 
+
+> NB: In the proxy you've just created, there were no policies, which is why we called it a "pass-through proxy". But even so, it will act as a proxy - it will receive an inbound call, and then make an outbound call on behalf of the client. 
+
+Undeploying a proxy does the converse: it instructs Apigee Edge to stop listening for inbound requests as configured in the proxy definition. The "New API Proxy" wizard automatically deploys new proxies, if you select an environment. 
+
+
+Deploying and Undeploying a Proxy** to a given environment from the Management UI is simple too.
+
     * Click on the **Deploy** drop-down on the API Proxy page.
 
     > ![](./media/image50.png)
