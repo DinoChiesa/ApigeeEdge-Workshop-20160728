@@ -2,6 +2,18 @@
 
 # Lab 1 – Design and Build a simple API Proxy
 
+## Objectives
+
+In this lab you will get familiar with the Apigee Edge Management UI by
+creating a simple passthrough API Proxy to the GET API for the **hotels** API. After creating the proxy you will also
+learn how to deploy and undeploy a proxy. Finally you will also learn
+how to use the Trace capabilities in the Management UI.
+
+## Prerequisites
+
+- Postman tool installed and **DevJam 2.0** bundle imported.
+
+
 ## Introduction
 
 ![](./media/image36.png)
@@ -57,22 +69,20 @@ For the purposes of illustration, we've created a specification describing an AP
 
 1. Review the OpenAPI specification [document for the fictitious hotels service]
 (http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/#/)  
-http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/\#/
+http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/#/
 ![](./media/image37.png)
 
 2. On the right side of the editor, in the documentation view, scroll
 down *about 65% of the page* to **GET /hotels** request.   Click the
-**Try this operation** button:
-
+**Try this operation** button:  
 ![](./media/image40.png)
-* Click on Send Request and observe the response
 
+3. Click on Send Request and observe the response  
 ![](./media/image39.png)
-
-This shows you the basics of apistudio, and how it helps you to explore a specification document. 
+This shows you the basics of the online apistudio tool, and how it helps you to explore a specification document. 
 
 3. Examine the left-hand-side of the browser page.  
-This markup is called YAML - for Yet Another Markup Language. But it is possible to specify OpenAPI Spec documents using JSON as well. 
+This markup is called YAML - for Yet Another Markup Language. But it is possible to specify OpenAPI Spec documents using JSON as well. Explore the structure of the specification.  You don't have to learn it, but it is nice to understand what's possible. 
 
 
 ## Part 2: Create an API proxy in Apigee Edge
@@ -85,11 +95,11 @@ Apigee Edge enables you to expose and manage  PIs that can be easily consumed by
 developers who build apps. You expose APIs on Apigee Edge by building
 API proxies that act as proxies or facades for backend services.
 
+### The API Proxy Concept
+
 [Merriam Webster says](http://www.merriam-webster.com/dictionary/proxy) that a proxy is
 
 > the agency, function, or office of a deputy who acts as a substitute for another
-
-### The API Proxy Concept
 
 Within the domain of Apigee Edge, an API Proxy is something that acts as a substitute
 for the actual API implementation, sometimes called a "backend". Instead of clients directly connecting to a backend API, a client will connect to an API Proxy that runs in Apigee Edge, and Apigee Edge will connect to the backend API.
@@ -100,7 +110,7 @@ for the actual API implementation, sometimes called a "backend". Instead of clie
 
 * ...you gain insight into the API usage.
 
-* you decouple the developer-facing API from the API exposed by 
+* ...you decouple the developer-facing API from the API exposed by 
 backend services. This brings several advantages:
 
   * it shields "consumer developers" - those who are using the APIs - from changes in backend code or implementation.  As development teams make backend changes, consumer developers
@@ -154,19 +164,14 @@ TargetEndpoint.
 
 ![](./media/image41.png)
 
-You can build API proxies using the Apigee Edge management UI. You can
-also implement API proxies on your local machine, and then import them
-to your organization on Apigee Edge. For an overview of the UI and API,
+You can interactively build API proxies using the Apigee Edge management UI. You can store proxy configurations offline (and in a code repository), and then import them
+into Apigee Edge, using... *an API*. Apigee Edge itself exposes an API for management and administrative purposes. 
+
+For an overview of the Edge UI and API,
 see [Using the Apigee Edge development
 environment](http://apigee.com/docs/api-services/content/using-apigee-edge-development-environment).
 
-##Objectives
-
-In this lab you will get familiar with the Apigee Edge Management UI by
-creating a simple passthrough facade to the GET API for the **hotels**
-data collection in API BaaS. After creating the facade you will also
-learn how to deploy and undeploy a proxy. Finally you will also learn
-how to use the Trace capabilities in the Management UI.
+## Note
 
 Some API teams build APIs using Design-First approach where they start
 with creating a Swagger (OpenAPI) document. Some of them happen to have
@@ -174,9 +179,6 @@ many existing back-end services/APIs & they prefer a Build-First
 approach which starts with building an API proxy in Apigee Edge. This
 lab shows you how to build proxies.
 
-##Prerequisites
-
-- Postman tool installed and **DevJam 2.0** bundle imported.
 
 ###Estimated Time: 15 mins
 
