@@ -65,7 +65,6 @@ Proxy defined in Apigee Edge.
 
 For the purposes of illustration, we've created a specification describing an API that manages information about hotels. 
 
-
 **Estimated Time: 6 minutes**
 
 1. Review the OpenAPI specification [document for the fictitious hotels service]
@@ -257,6 +256,8 @@ This shows you the interactive experience, building a proxy using the Apigee Edg
 
 ## Part 4: Test your proxy
 
+**Estimated Time: 6 minutes**
+
 At this point, we will start to use the **Postman** tool as a client
 to invoke our proxy and continue to use **Postman** throughout the
 rest of the labs.
@@ -286,6 +287,8 @@ rest of the labs.
 
 ## Part 5: Deployment
 
+**Estimated Time: 3 minutes**
+
 In Apigee Edge, when you "deploy" an API Proxy, you make its
 configuration active. Apigee Edge begins listening for inbound
 requests on the base URL path you specified, and when such requests
@@ -303,7 +306,6 @@ Undeploying a proxy does the converse: it instructs Apigee Edge to
 stop listening for inbound requests as configured in the proxy
 definition. The "New API Proxy" wizard automatically deploys new
 proxies, if you select an environment.
-
 
 **Deploying or Undeploying a Proxy** to a given environment from the
 Management UI is simple.
@@ -335,6 +337,8 @@ Things to consider:
 
 
 ## Part 6: Tracing
+
+**Estimated Time: 6 minutes**
 
 **Tracing the execution of a proxy** can also be done easily from the Management UI. This is a very powerful capability of Apigee Edge, since it makes it easy to troubleshoot and monitor API proxies. The Trace capability lets you probe the details of each step through an API proxy flow.
 
