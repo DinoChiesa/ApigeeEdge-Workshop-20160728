@@ -509,7 +509,8 @@ Let's explore that now.
 
   d. Click **Create Model**
 
-  This creates a named API model, but there's no description attached to that name, just yet. 
+  This creates a named API model, but there's no description attached to that name, just yet.
+  Let's do that now. 
 
 
 4. On the resulting page, click on ‘Import’ to import an API specification. 
