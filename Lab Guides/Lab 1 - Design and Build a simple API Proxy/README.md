@@ -267,7 +267,7 @@ rest of the labs.
 5. Observe the lovely response!
 
 
-## Part 5: Deploying API Proxies
+## Part 5: Deployment
 
 In Apigee Edge, when you "deploy" an API Proxy, you make its configuration active. Apigee Edge begins listening for inbound requests on the base URL path you specified, and when such requests arrive, any policy steps you've provided in the proxy configuration will be executed. The proxy will then call the configured backend system, and when the response arrives, it will run the configured policies in the response flow. 
 
@@ -278,15 +278,23 @@ Undeploying a proxy does the converse: it instructs Apigee Edge to stop listenin
 
 Deploying and Undeploying a Proxy** to a given environment from the Management UI is simple too.
 
-    * Click on the **Deploy** drop-down on the API Proxy page.
+1. Back in the Edge UI, Click on the **Deploy** drop-down on the API Proxy page.
+![](./media/image50.png)
 
-    > ![](./media/image50.png)
+2. Notice that the proxy we just created is deployed to the **test** environment.
 
-  * Notice that the proxy we just created is deployed to the **test** environment.
-  * Click on the **test** environment name. This undeploys the proxy from the **test** environment
-  * Click on the **Deploy** drop-down again and select the **test** environment. This re-deploys the proxy to the **test**
-    environment
+3. Click on the **test** environment name. This undeploys the proxy from the **test** environment.
 
+4. Return to the Postman tool. Invoke the same request again.  You should now see that the request fails, indicating that Apigee Edge is not listening for that in-bound request.
+
+5. Return to the Edge UI.  Click on the **Deploy** drop-down again
+and select the **test** environment. This re-deploys the proxy to
+the **test** environment.
+
+6. Again, back to Postman. Invoke the same request again. It works. 
+
+
+## Part 6: Tracing
 
 *  **Tracing the execution of a proxy** can also be done easily from the Management UI. This is a very powerful capability of the product since it makes it easy to troubleshoot and monitor API  proxies running on Apigee Edge. Trace lets you probe the details of each step through an API proxy flow.
     *  From the **{your\_initials}**\_hotels API Proxy page, click on the **Trace** tab.
