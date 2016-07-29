@@ -140,35 +140,43 @@ The various caching policies supported by Apigee Edge are:
 ![](./media/proxy-add-a-step.png)
 
   By doing this, you are adding a policy step that will run in the
-  Request Pre-flow. It will run for all inbound requests.
+  Request Pre-flow. It will run for all inbound requests. You will see a
+  modal dialog that allows you to select a particular policy:   
+  ![](./media/modal-add-a-step.png)  
+
+  Feel free to scroll to examine the list of available policies. 
 
 
-7. Select the ‘Spike Arrest’ policy with the following properties:
+7. Select the ‘Spike Arrest’ policy, and click "Add".  You have now
+added a policy, and you will be presented with this view:  
+![](./media/spike-arrest-added.png)
 
-      > Display Name: **Spike Arrest 10pm**
+8. Modify the configuration of the policy, specifying "10pm" - 10 per minute - for the Rate.   
+![](./media/spike-arrest-10pm.png)
 
-      > Name: **Spike-Arrest-10pm**
+  This shows you the basics related to configuring policies in Apigee
+  Edge. There are numerous policy types, and for each one, you may
+  configure certain properties to affect their behavior.
 
-![](./media/image22.png)
+  Your configuration should look
+  like this -
 
-**Note**: By applying the policy to the Flow PreFlow, this Spike Arrest policy will get enforced for all the resources defined for this
-Proxy.
-    * Click on the “Spike Arrest” policy and change the value of the following property in the XML:
-![](./media/image20.png)
+  ```
+  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  <SpikeArrest async="false" continueOnError="false" enabled="true" name="Spike-Arrest-1">
+      <DisplayName>Spike Arrest 10pm</DisplayName>
+      <Properties/>
+      <Identifier ref="request.header.some-header-name"/>
+      <MessageWeight ref="request.header.weight"/>
+      <Rate>10pm</Rate>
+  </SpikeArrest>
+  ```
 
-**NOTE:** The value was changed from 30 per second to 10 per minute.
+9. Save the changes to the proxy and ensure that it is deployed
+successfully to the ‘test’ environment.
+![](./media/apiproxy-save.png)
 
-   * Save the changes to the proxy and ensure that it is deployed successfully to the ‘test’ environment. Your configuration should look like this -
-```
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<SpikeArrest async="false" continueOnError="false" enabled="true" name="Spike-Arrest-10pm">
-    <DisplayName>Spike Arrest 10pm</DisplayName>
-    <Properties/>
-    <Identifier ref="request.header.some-header-name"/>
-    <MessageWeight ref="request.header.weight"/>
-    <Rate>10pm</Rate>
-</SpikeArrest>
-```
+
 
 Think of Spike Arrest as a way to generally protect against traffic
 spikes (system wide) rather than as a way to limit traffic to a
