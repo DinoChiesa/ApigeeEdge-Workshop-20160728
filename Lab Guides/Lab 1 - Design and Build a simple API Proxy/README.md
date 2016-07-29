@@ -212,41 +212,36 @@ expose to "consumer developers".
 6. On the New API Proxy form that is displayed, provide information needed to generate an API proxy. Select **Reverse Proxy** and click on **Use OpenAPI**  
 ![](./media/image44.png)
 
-7. Paste in the URL for the OpenAPI Specification document :
-   [*http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/spec*](http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/spec)
-   
-8. Click on ***apply*** and then hit ***next***
+7. Paste in the URL for the OpenAPI Specification document:  
+http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/spec
+ 
+8. Click on ***apply*** and then click ***next***  
 ![](./media/image46.png)
 
-9. Enter Proxy details
-    > Proxy Name: **{your\_initials}\_hotels**
-    >
-    > Project Base Path: **/v1/{your\_initials}\_hotels**
-    >
-    > Existing API:
-    > **https://api.usergrid.com/{your-BaaS-org}/sandbox**
+9. Enter Proxy details  
+**Note**: In the following, replace **{your-initials}** with the initials of your name. Replace  **{your-BaaS-org}** with the actual name of your API BaaS organization.
+  * **Proxy Name**: **{your\_initials}\_hotels**
+  * **Project Base Path**: **/v1/{your\_initials}\_hotels**
+  * **Existing API**: **https://api.usergrid.com/{your-BaaS-org}/sandbox**
+
+10. Verify that it looks mostly like this: 
 ![](./media/image34.png)
 
+11. click next.
 
-**Note**: Replace **{your-BaaS-org}** with the actual name of your API BaaS organization. Replace **{your-initials}** with the initials of your name.
+12. Leave all of the **operations** selected from the OpenAPI spec to proxy. Click next.
+![](./media/image47.png)
 
-Once you've entered these details hit next.
+13. Choose **Pass through (none)** for the authorization in order to choose not to apply any security policy for the proxy. We'll get to security in a later lab exercise. Click next. 
+![](./media/image48.png)
 
-   * Leave all of the **operations** selected from the OpenAPI spec to proxy and hit next
+14. Select only the **default** virtual host (http only) and Click next
+![](./media/image49.png)
 
-> ![](./media/image47.png)
+15. Ensure that only the **test** environment is selected to deploy to and click **Build and Deploy**. Once it has built and deployed click the link to view your proxy in the proxy editor.
+![](./media/image06.png)
 
-   * Choose **Pass through (none)** for the authorization in order to choose not to apply any security policy for the proxy (this will be done in the later labs) and hit next
-
-> ![](./media/image48.png)
-
-   * Select only the **default** virtual host (http only) and hit next
-
-> ![](./media/image49.png)
-
-   * Ensure that only the **test** environment is selected to deploy to and click **Build and Deploy**. Once it has built and deployed click the link to view your proxy in the proxy editor.
-
-> ![](./media/image06.png)
+xxxxx
 
 * **Deploying and Undeploying a Proxy** to a given environment from the Management UI is simple too.
     * Click on the **Deploy** drop-down on the API Proxy page.
