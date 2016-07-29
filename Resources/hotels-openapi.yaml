@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  description: 'This is a sample Hotels Server.  You can find out more about OpenAPI spec at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).'
+  description: 'This is a sample Hotels Server.'
   version: 1.0.0
   title: OpenAPI Specification for Hotels
   contact:
@@ -10,7 +10,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-host: api.usergrid.com
+host: cap500-test.apigee.net
 basePath: /v1/dpc_hotels
 tags:
   - name: hotel
@@ -22,7 +22,7 @@ produces:
   - application/json
   - application/xml
 schemes:
-  - https
+  - http
 paths:
   /hotels/{hotel-uuid}:
     get:
@@ -32,6 +32,11 @@ paths:
         - name: hotel-uuid
           in: path
           description: uuid of the hotel
+          required: true
+          type: string
+        - name: apikey
+          in: query
+          description: apikey for the request
           required: true
           type: string
       responses:
@@ -62,6 +67,11 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/HotelCreateRequest'
+        - name: apikey
+          in: query
+          description: apikey for the request
+          required: true
+          type: string
       responses:
         "201":
           description: successfully created a hotel
@@ -84,6 +94,11 @@ paths:
           in: query
           description: find hotels within radius
           required: false
+          type: string
+        - name: apikey
+          in: query
+          description: apikey for the request
+          required: true
           type: string
       responses:
         '200':

@@ -520,10 +520,12 @@ Let's explore that now.
 
 6. Download the [hotels-openapi.yaml](../../Resources/hotels-openapi.yaml) file to your workstation.
 
-7. Open that file in a text editor and change the basePath on line 14 to match the base path of your API proxy. Example: `/v1/dpc_hotels`
+7. Open that file in a text editor and change the basePath on line 14 to match
+  the base path of your API proxy. Example: `/v1/dpc_hotels`  
+  Save the file. 
 
-
-6. Back in the developer portal, Click browse to select the YAML file to upload.
+8. Back in the developer portal, Click browse to select the YAML file - the one
+  you just modified - to upload.  
   ![](./media/browse-for-yaml-file.png)
   
 
