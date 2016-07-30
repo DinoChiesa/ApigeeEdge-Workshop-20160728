@@ -196,7 +196,6 @@ request in the `Authorization` header.
   c. name your new API Proxy with an _oauth suffix. For example, if your
     prior proxy was named `dpc_hotels` , then name the new one, `dpc_hotels_oauth`.
 
-
 2. Modify the basepath at which the API Proxy listens.
 
   a. click the `Develop` tab.
@@ -210,7 +209,7 @@ request in the `Authorization` header.
   d. Then, click the Proxy Endpoint named "default"
     ![](./media/click-proxy-endpoint-default.png)
 
-  e. Append the suffix "_oauth" to the basepath
+  e. Append the suffix "_oauth" to the basepath. Case matters. 
     ![](./media/append-OAuth-to-basepath.png)
 
   f. Click the blue "Save" button.
@@ -280,7 +279,27 @@ cases, see [Introduction to OAuth
 2.0](http://apigee.com/docs/api-services/content/oauth-introduction).
 
 
-### Modify the Proxy to use Token Validation
+### Modify the API Product to include the new API Proxy
+
+1. Navigate to the API Products page in the Edge UI, then select
+  *your* API Product.
+  ![](./media/navigate-to-apiproducts.gif)
+
+2. Click the "Edit" button to modify the API Product
+  ![](./media/apiproduct-click-edit.png)
+
+3. Click the "+ API Proxy" button.
+  ![](./media/edit-apiproduct-add-proxy.png)
+
+4. Select your new API proxy, with the _oauth suffix.
+
+5. Click "Save" to save the API Product
+
+
+Now, the API Product includes two API Proxies. 
+
+
+### Modify the New Proxy to use Token Validation
 
 1. Add an OAuth 2.0 Token Validation Policy
 
@@ -331,11 +350,11 @@ cases, see [Introduction to OAuth
     [in the documentation](http://docs.apigee.com/api-services/content/oauthv2-policy).
 
 
-2. Remove the Authorization Header After Validating the OAuth Token
+2. Remove the Authorization Header after Validating the OAuth Token
 
-  In the prior version of the API Proxy, we used `AssignMessage` to
-  remove the apikey query parameter. Now, we'll modify that policy
-  to remove the Authorization header.
+  In the prior version of the API Proxy, we used an `AssignMessage` policy to
+  remove the apikey query parameter. Now, we'll modify that policy to remove the
+  Authorization header.
   
   a. Click the AssignMessage policy
     ![](./media/click-assignmessage-policy.png)
@@ -395,110 +414,95 @@ Done! OK, Let's test it.
   
   This shows that the OAuth2 Verification policy is being enforced as expected.
 
-
 4. Review the Trace for the proxy and the returned response to ensure
    that the flow is working as expected.
    
 5. Stop the Trace session for the ‘{your_initials}_hotels_oauth’ proxy
 
-
 6. Now, obtain a valid token via client_credentials grant_type.
 
+  Previously we have configured an OAuth-token dispensing proxy into the
+  Edge organization. It's ready and available for you to use. 
 
-**** RESUME heRE *****
+  You must obtain an OAuth token by calling the ’oauth’ API proxy token endpoint
+  and passing the consumer key and consumer secret of the app you have
+  registered on the developer portal.
 
+  a. Using Postman, send the `POST /token’ request.
+    ![](./media/postman-click-specify-send.png)
+    
+    You will need to specify the consumer_key and consumer_secret (aka client_id
+    and client_secret) in the appropriate places in the form body.
 
+    Copy-paste the Consumer Key and Consumer Secret from the
+    developer portal, or from the Edge Admin UI. As you copy-paste, remove any
+    spaces before and after the values of the Consumer Key and Consumer Secret.
 
+  b. Review the response of the `POST /token` request. Copy the value of the
+    ‘access_token’ attribute to use in the next step. It should look like this:
+    
+    ![](./media/postman-token-response.png)
 
-        i.  You will obtain a valid oauth token by directly calling the
-            ’oauth’ API proxy token endpoint and passing the consumer key
-            and consumer secret of the ‘{your_initials}_iExplore
-            App’ app.
+    Or, in json:
+    ```json
+    {
+      "issued_at": 1469852566553,
+      "grant_type": "client_credentials",
+      "api_product_list": "[DPC Hospitality Basic Product]",
+      "expires_in": 1799,
+      "client_id": "SKGDyIk9jhAx9qoyekgd4YSjXLcgRoxx",
+      "access_token": "I6RPh2jDNx90feGXwZ2nbbTYrrBW",
+      "application_name": "dpc2",
+      "issued": "2016-Jul-30T04:22:46.553+00:00",
+      "expires": "2016-Jul-30T04:52:45.553+00:00",
+      "note": "All this metadata is attached to the token in the token store within Edge."
+    }    
+    ```
+    
+    This response give basic information about the token. Observe the
+    access_token and the expiry values - those are most critical.  You, as API
+    Publisher, have control over how much information to return in an OAuth
+    token response. You could simply return the token and the expiry, or you
+    could return additional information at your discretion.
 
-        ii. Send a test ‘/POST OAuth Token - Client Cred’ request from
-            Postman after setting appropriate values in the
-            ‘x-www-form-urlencoded’ section of the request:
-            -   client_id: {your_initials}_iExplore App Consumer Key**
-            -   client_secret: {your_initials}_iExplore App Consumer
-                Secret
-            -   grant_type: client_credentials (this should be added as
-                query param)
+    Now, we will use that token in a request.
+    
 
-> ![](./media/image27.png)
+7. Return to the Edge UI and Start a Trace session for the
+‘{your_initials}_hotels_oauth’ proxy.
 
-**Note**: Copy-paste the Consumer Key and Consumer Secret from the {your_initials}_iExplore App’s detail page. As you copy-paste, remove any spaces before and after the values of the Consumer Key and Consumer Secret.
+8. Return to Postman, and select the `GET hotels - OAuth` request.
+  ![](./media/postman-click-get-hotels-oauth.png)
 
-    c.  Review the response of the ‘/POST OAuth Token - Client
-        Cred’ request. Copy the value of the ‘access_token’ attribute to
-        use in the next step.
+9. Specify these values:
 
-  ```
-  {
-  issued_at: "1414962637000",
-  application_name: "ef723b8b-fdb1-4aae-9418-096d8ab7fec7",
-  scope: "",
-  status: "approved",
-  api_product_list: "[Hospitality]",
-  expires_in: "3599",
-  developer.email: "your@email.id",
-  organization_id: "0",
-  token_type: "BearerToken",
-  client_id: "P24PNGrXN0gTNdVi6giT12Dq0vrG3ruB",
-  access_token: "**j1AA2PeAtKOMCZa9tuCdDDsRqn8J**",
-  organization_name: "demo37",
-  refresh_token_expires_in: "0",
-  refresh_count: "0"
-  }
-  ```
+  * query parameters: `zipcode=98101&radius=200`
+  
+  * header: `Authorization: Bearer {access_token}`
 
-    d.  Start a Trace session for the ‘{your_initials}_hotels’ proxy
+    ... but replace the `{access_token}` with your access token obtained from the prior
+    step.
+    
+    ![](./media/postman-specify-token.gif)
 
-    e. Set up the ‘/GET hotels’ request in Postman with the following
-    query parameters AND header:
-        -   Query Parameters:
-            -   zipcode: 98101
-            -   radius: 200
+10. Send the request from Postman.
 
-        -   Header:
-            -   Authorization: Bearer {access_token}
+  You should see a success response. 
 
-> ![](./media/image28.png)
-
-**Note**:
-
-    -   Replace the API proxy URL with {your_initials}_hotels URL.
-    -   Replace the {access_token} with the value of the ‘access_token’ from the response in the step above.
-
-    Send the Postman request, and review the Trace for the proxy and the returned
+11. Switch to the Edge UI, and review the Trace for the proxy and the returned
     response to ensure that the flow is working as expected.
 
-**Summary**
-
-That completes this hands-on lesson. In this lesson you learned about
-the various out-of-the-box security related policies that are available
-in Apigee Edge and to leverage a couple of those policies - API Key
-Verification and OAuth 2.0 client credentials grant - to secure your
-APIs.
 
 
-To support use cases with grant types other than client credentials,
-the OAuth proxy must be configured with authorization endpoints. For
-additional information, see [configuring authorization
-endpoints](http://apigee.com/docs/api-services/content/oauth-endpoints)
-and [authorizing requests using OAuth
-2.0](http://apigee.com/docs/api-services/reference/authorize-requests-using-oauth-20).
+## Summary
 
+That completes this hands-on lesson. In this lesson you learned:
 
+- the security policies available in Apigee Edge
 
-====
+- the OAuth grant types, and how Apigee Edge supoprts them
 
-    You will use the Consumer Secret (i.e. the API
-    Secret) in the next section when the security policy is changed from
-    API Key Verification to an OAuth Token Validation policy.
+- how API Key verification differs from OAuth token verification
 
-    ***** DINO REsumE heRE ****
-    Friday, 29 July 2016, 17:39
+- how to use OAuth Token verification in an Apigee Edge API Proxy. 
 
-    **Add security using OAuth 2.0: Client Credentials Grant**
-
-====

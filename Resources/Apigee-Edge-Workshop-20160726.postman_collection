@@ -1,11 +1,13 @@
 {
-	"id": "dd43f075-5402-a81b-d19a-2f4d4d649139",
+	"id": "f235cd0a-9196-dcd0-cd97-fd1c2600e837",
 	"name": "Apigee Edge Workshop 20160726",
 	"description": "",
 	"order": [
-		"773a5409-d217-5696-b486-6cae4bcc445a",
-		"768c3534-7a10-24c5-f80c-9cf698696fb8",
-		"4bf61ea3-f5be-56f5-698f-9bdefa4d60a8"
+		"82931eba-70a3-8001-d915-70f789e13c04",
+		"df35eadd-4796-369b-82c2-cc1d2bef735b",
+		"26f74ab4-ad47-b29e-8f33-3818c275b5b6",
+		"166629c2-02bf-f894-2602-4e7f00c52e18",
+		"93e17fdf-307f-d57a-832f-e9b0e63f4f39"
 	],
 	"folders": [],
 	"timestamp": 1434532061761,
@@ -14,21 +16,40 @@
 	"published": false,
 	"requests": [
 		{
-			"id": "4bf61ea3-f5be-56f5-698f-9bdefa4d60a8",
+			"id": "166629c2-02bf-f894-2602-4e7f00c52e18",
+			"headers": "Authorization: Bearer {access_token}\n",
+			"url": "http://{{org}}-{{env}}.apigee.net/v1/{{initials}}_hotels_oauth/hotels",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1469764764310,
+			"name": "GET hotels - OAuth",
+			"description": "",
+			"collectionId": "f235cd0a-9196-dcd0-cd97-fd1c2600e837",
+			"responses": []
+		},
+		{
+			"id": "26f74ab4-ad47-b29e-8f33-3818c275b5b6",
 			"headers": "",
-			"url": "https://{{org}}-{{env}}.apigee.net/oauth/client_credentials/accesstoken",
+			"url": "https://{{org}}-{{env}}.apigee.net/v1/oauth2-pwd-cc/token",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
 			"data": [
 				{
 					"key": "client_id",
-					"value": "pah9lOG6fJPt7Do1dmixmkwW0I3t0ATG",
+					"value": "insert-your-client-id-here",
 					"type": "text"
 				},
 				{
 					"key": "client_secret",
-					"value": "LtBMl8HVDHbk2uH9",
+					"value": "insert-your-client-secret-here",
 					"type": "text"
 				},
 				{
@@ -42,32 +63,13 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1469764660448,
-			"name": "/POST OAuth Token - Client Cred",
+			"time": 1469851911821,
+			"name": "POST /token - OAuth Token - Client Cred",
 			"description": "",
-			"collectionId": "dd43f075-5402-a81b-d19a-2f4d4d649139"
+			"collectionId": "f235cd0a-9196-dcd0-cd97-fd1c2600e837"
 		},
 		{
-			"id": "768c3534-7a10-24c5-f80c-9cf698696fb8",
-			"headers": "Content-Type: application/json\n",
-			"url": "http://{{org}}-{{env}}.apigee.net/v1/{{initials}}_hotels/hotels",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "GET",
-			"data": [],
-			"dataMode": "params",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1469764764310,
-			"name": "/GET hotels",
-			"description": "",
-			"collectionId": "dd43f075-5402-a81b-d19a-2f4d4d649139",
-			"responses": []
-		},
-		{
-			"id": "773a5409-d217-5696-b486-6cae4bcc445a",
+			"id": "82931eba-70a3-8001-d915-70f789e13c04",
 			"headers": "Authorization: Bearer {access_token}\nContent-Type: application/x-www-form-urlencoded\n",
 			"url": "http://{{org}}-{{env}}.apigee.net/v1/{{initials}}_hotelspro/hotels?zipcode=98101&radius=200",
 			"preRequestScript": "",
@@ -96,9 +98,62 @@
 			"currentHelper": "normal",
 			"helperAttributes": {},
 			"time": 1469764773036,
-			"name": "/GET hotelspro",
+			"name": "GET hotelspro",
 			"description": "",
-			"collectionId": "dd43f075-5402-a81b-d19a-2f4d4d649139"
+			"collectionId": "f235cd0a-9196-dcd0-cd97-fd1c2600e837"
+		},
+		{
+			"id": "93e17fdf-307f-d57a-832f-e9b0e63f4f39",
+			"headers": "",
+			"url": "https://{{org}}-{{env}}.apigee.net/v1/oauth2-pwd-cc/token",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "username",
+					"value": "insert-your-username-here",
+					"type": "text"
+				},
+				{
+					"key": "password",
+					"value": "insert-your-password-here",
+					"type": "text"
+				},
+				{
+					"key": "grant_type",
+					"value": "password",
+					"type": "text"
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1469854172801,
+			"name": "POST /token - OAuth  password grant",
+			"description": "",
+			"collectionId": "f235cd0a-9196-dcd0-cd97-fd1c2600e837",
+			"responses": []
+		},
+		{
+			"id": "df35eadd-4796-369b-82c2-cc1d2bef735b",
+			"url": "http://{{org}}-{{env}}.apigee.net/v1/{{initials}}_hotels/hotels",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1469764764310,
+			"name": "GET hotels",
+			"description": "",
+			"collectionId": "f235cd0a-9196-dcd0-cd97-fd1c2600e837",
+			"responses": []
 		}
 	]
 }
