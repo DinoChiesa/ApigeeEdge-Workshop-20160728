@@ -20,5 +20,5 @@ All of the material here is released under the [Apache 2.0 license](LICENSE)
 | [Lab 3 – Publish APIs](./Lab%20Guides/Publish-APIs)                                                 | 60 mins   |
 | Break                                                                                               | 20 mins   |
 | [Lab 4 - Securing APIs with OAuth](./Lab%20Guides/Securing-APIs-with-OAuth)                         | 45 mins   |
-| Break                                                                                               | 15 mins   |
+
 
