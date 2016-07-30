@@ -4,7 +4,7 @@
 
 ![](./media/image19.png)
 
-## Objectives 
+## Objective
 
 The objective of this lesson is to learn to use Apigee Edge
 OAuth 2.0 Token Validation policies.
@@ -172,205 +172,243 @@ Masking](http://apigee.com/docs/api-services/content/data-masking)[
 
 **Estimated Time: 10 minutes**
 
-The way your proxy is configured, as of now, the Consumer Key (i.e.
-the API Key) is the only key that the your App will need to access the
-proxy resources. You will use the Consumer Secret (i.e. the API
-Secret) in the next section when the security policy is changed from
-API Key Verification to an OAuth Token Validation policy.
+The way your API Proxy is configured now, the app must present the Consumer Key,
+also known as the API Key, in a query parameter, to access the proxy
+resources. We will create a modified version of this API Proxy that accepts only
+OAuth tokens, presented in the Authorization header.
 
-1. First, let's preserve the state of the API Proxy you have working now.
+There are two steps that an app must perform in order to use APIs protected by
+OAuth tokens. First the app needs to obtain a token; usually this involves a POST
+request to a `/token` endpoint. Then, it sends the received token with every
+request in the `Authorization` header.
 
-  We will do that by copying your existing API Proxy to a new one.
+### Preparation
+
+1. Before proceeding, let's preserve the state of the API Proxy you have working
+  now. We will do that by copying your existing API Proxy to a new one.
+
+  a. First, use the Edge UI to navigate to your API Proxy.  
+    ![](./media/navigate-to-your-api-proxy.gif)
+    
+  b. Under the Project dropdown, click "Save as New API Proxy"
+    ![](./media/save-as-new-api-proxy.png)
+
+  c. name your new API Proxy with an _oauth suffix. For example, if your
+    prior proxy was named `dpc_hotels` , then name the new one, `dpc_hotels_oauth`.
 
 
+2. Modify the basepath at which the API Proxy listens.
 
-***** DINO REsumE heRE ****
-Friday, 29 July 2016, 17:39
+  a. click the `Develop` tab.
+    ![](./media/click-develop-tab.png)
+
+  b. click the API Proxy name
+    ![](./media/click-apiproxy-name.png)
+
+  c. Modify the Display Name to include the word "OAuth", to reflect the purpose of this proxy.
+
+  d. Then, click the Proxy Endpoint named "default"
+    ![](./media/click-proxy-endpoint-default.png)
+
+  e. Append the suffix "_oauth" to the basepath
+    ![](./media/append-OAuth-to-basepath.png)
+
+  f. Click the blue "Save" button.
+
+  You have now saved a new API proxy, with a new basePath. 
+
+  For consideration and discussion: why did we need to modify the basePath of this proxy?
+  
+
+### About OAuth2.0 Grant Types and Apigee Edge
+
+In Apigee Edge, API Publishers have full control over how OAuth tokens are
+issued. There are four "grant types" described in the [OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749):
+
+| grant_type         | Description |
+| :----------------- | :----------- |
+| client_credentials | Used to request or issue a token that authenticates "a client", which is not associated to a user or person. There is no user authentication. |
+| password           | Used to request or issue a token that authenticates both clients and users. The app must pass credentials for both entities to the token server (in our case, Apigee Edge). The token server is responsible for validating both sets of credentials. |
+| authorization_code | Used to request or issue a token that authenticates both clients and users. The app passes credentials for itself; the token server redirects the app to a login webpage, where the user will be authenticated. This avoids the need for the user to send user credentials to the token server, which may be untrusted from the user's perspective. Through a 302-redirect, the app exchanges an authorization code for a token. Hence, the name of the grant type. |
+| implicit           | Used for a simpler approach to oauthorization_code grants, when the client is trusted. |
 
 
+You should think of each grant type as a different way that an OAuth token can
+be requested and issued. As you can see, different grant types apply to
+different scenarios.
 
+Apigee Edge can issue OAuth 2.0 tokens according to any of these grant types.
 
+In Apigee Edge, token issuance is under full control of the API Publishers.  In
+fact, API Publishers must expose a `/token` endpoint to issue tokens, and must
+configure the API Proxy to perform the steps required to issue the tokens.
 
+If the API Publisher wishes to issue tokens according to the implicit
+grant_type, then, the API Publisher must configure the API Proxy appropriately.
+If the API Publisher wishes to issue tokens according to the client_credentials
+grant_type, then, likewise. Apigee Edge does not issue tokens "by default".
+Enabling Apigee Edge to issue tokens requires configuration by the API
+Publishing team.
 
-
-**Add security using OAuth 2.0: Client Credentials Grant**
-
-For convenience, all organizations on Apigee Edge come preconfigured
-with a set of OAuth 2.0 endpoints that implement the ‘client
-credentials grant type’. For information about the configuration of
-the default ‘oauth’ proxy, review [policies in the oauth token
-endpoint](http://apigee.com/docs/api-services/tutorials/secure-calls-your-api-through-oauth-20-client-credentials).
-
-This section of the lesson explains how to protect an API using this
-default ‘oauth’ proxy configuration.
-
-**About the client credentials grant type**
+### Let's talk about Client Credentials
 
 The client credentials grant type defines a procedure for issuing
 access tokens in exchange for *App credentials*. These app credentials
 are the consumer key and secret pair that Apigee Edge issues for each
 app that is registered in an organization.
 
-For this reason, it is relatively simple to 'step up' your API
+In the client_credentials grant type, the token server verifies the credentials
+of the client (the app), and issues a short-lived token in response. The
+credentials are always the tuple of {client_id, client_secret}. Remember, a
+token is just a random-looking string.
+
+It's relatively simple to 'step up' your API
 security scheme from API key validation to OAuth client credentials.
-Both schemes use the same consumer key and secret to validate the
-client app. The difference is that client credentials provides an
+The difference is that client credentials provides an
 extra layer of control, since you can easily revoke an access token
 when needed, without requiring you to revoke the app's consumer key.
 To work with the default OAuth endpoints, you can use any consumer key
 and secret generated for app in your organization to retrieve access
-tokens from the token endpoint. You can even enable client credentials
-for apps that already have consumer keys and secrets.
+tokens from the token endpoint. 
 
-Client credentials has very specific use cases, and is not the grant
-type most commonly used for web and mobile apps. For a general
-introduction to OAuth 2.0 grant types with definitions and use cases,
-see [Introduction to OAuth
+You should be aware that tokens obtained via the client_credentials grant type
+have specific use cases. This grant type does not authenticate the user, which
+means it is not commonly used for web and mobile apps.
+
+For a general introduction to OAuth 2.0 grant types with definitions and use
+cases, see [Introduction to OAuth
 2.0](http://apigee.com/docs/api-services/content/oauth-introduction).
 
-To support use cases with grant types other than client credentials,
-the OAuth proxy must be configured with authorization endpoints. For
-additional information, see [configuring authorization
-endpoints](http://apigee.com/docs/api-services/content/oauth-endpoints)
-and [authorizing requests using OAuth
-2.0](http://apigee.com/docs/api-services/reference/authorize-requests-using-oauth-20).
 
-4)  **Adding an OAuth 2.0 Token Validation Policy**
+### Modify the Proxy to use Token Validation
 
-    a.  Go to the Apigee Edge Management UI browser tab
+1. Add an OAuth 2.0 Token Validation Policy
 
-    b.  Since you will be adding an OAuth v2.0 policy, the API Key
-    Verification policy is no longer necessary. Delete the ‘Verify API Key’
-    policy from the ‘{your_initials}_hotels’ proxy default proxy endpoint preflow.
+  a. Go to the Apigee Edge Management UI browser tab
 
-> ![](./media/image24.png)
+  b. Select your API Proxy and click the Develop tab.
+    Ensure you are modifying the API Proxy with the _oauth suffix. 
 
-    c.  Using the “+Step” from the ‘Develop’ tab of the
-    ‘{your_initials}_hotels’ proxy, add the ‘OAuth v2.0’ policy with the following properties:
+  c.  Since you will be adding an OAuth v2.0 policy, the API Key
+    Verification policy is no longer necessary. Click the proxy Pre-Flow:
+    ![](./media/click-proxy-preflow.png)
 
-        -   Policy Display Name: Validate OAuth v2 Token
-        -   Policy Name: Validate-OAuth-v2-Token
+  d. Delete the ‘Verify API Key’
+    policy from the ‘{your_initials}_hotels_oauth’ proxy default proxy endpoint preflow.
+    ![](./media/delete-VAK-policy.png)
 
-> ![](./media/image15.png)
+  e. Click "+Step"
+    ![](./media/proxy-add-a-step.png)
 
-    d.  The ‘Validate OAuth v2 Token’ policy will get added after the
-        ‘Response Cache’ policy. Drag and move the ‘Validate OAuth v2
-        Token’ policy to be before the ‘Remove APIKey QP’ policy
+  f. In the modal dialog, select the OAuth2.0 policy
+    ![](./media/select-oauth20-policy.png)
 
-> ![](./media/image25.png)
+  g. Click "Add"
 
-    e.  Review the XML configuration and/or the properties associated with
-        the ‘Validate OAuth v2 Token’ policy.
+    The ‘Validate OAuth v2 Token’ policy will get added after the
+    ‘Response Cache’ policy. Drag and move the OAuth v2.0
+    policy so that it appears before the ‘Remove APIKey QP’ policy.
+    ![](./media/click-and-drag-oauth.gif)
+    
+  h. Modify the configuration associated with
+    the OAuth v2 policy. It should look like this:
 
-  ```
-  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-  <OAuthV2 async="false" continueOnError="false" enabled="true" name="Validate-OAuth-v2-Token">
-  <DisplayName>Validate OAuth v2 Token</DisplayName>
-  <FaultRules/>
-  <Properties/>
-  <Attributes/>
-  <ExternalAuthorization>false</ExternalAuthorization>
-  <Operation>VerifyAccessToken</Operation>
-  <SupportedGrantTypes/>
-  <GenerateResponse enabled="true"/>
-  <Tokens/>
-  </OAuthV2>
-  ```
+    ```xml
+    <OAuthV2 name="Validate-OAuth-v2-Token">
+      <DisplayName>Validate OAuth v2 Token</DisplayName>
+      <ExternalAuthorization>false</ExternalAuthorization>
+      <Operation>VerifyAccessToken</Operation>
+      <GenerateResponse enabled="true"/>
+    </OAuthV2>
+    ```
 
-*(You can find the policy xml*
-[**here**](https://gist.github.com/prithpal/45e6e50683b53685ebc6)*.
-Click the “Raw” button and copy/paste into your policy editor).*
+    The OAuthV2 policy in Apigee Edge performs many tasks: generating tokens,
+    validating tokens, invalidating tokens, and so on. The value of the
+    **Operation** element indicates the action to take. In this case, we want
+    to verify the access token, so we use `VerifyAccessToken`.
 
-The value of the {Operation} element indicates the action to
-take - in this case, verification of the access token.
+    All of the options for the OAuthV2 policy are described
+    [in the documentation](http://docs.apigee.com/api-services/content/oauthv2-policy).
 
-The value of the {ExternalAuthorization} element is set to
-‘false,’ indicating that Apigee Edge should validate the OAuth Token
-rather than delegating it to an external validator.
 
-    f.  Removing the Authorization Header After Validating the OAuth Token
+2. Remove the Authorization Header After Validating the OAuth Token
 
-        i.  Using “+ Step” from the “Develop” tab of the
-            ‘{your_initials}_hotels’ proxy, add the ‘Assign Message’
-            policy with the following properties on the Proxy End point,
-            Request flow :
+  In the prior version of the API Proxy, we used `AssignMessage` to
+  remove the apikey query parameter. Now, we'll modify that policy
+  to remove the Authorization header.
+  
+  a. Click the AssignMessage policy
+    ![](./media/click-assignmessage-policy.png)
 
-            -   Policy Display Name: Remove Authorization Header
-            -   Policy Name: Remove-Authorization-Header
+  b. Modify the XML configuration to use this:
+  
+    ```xml
+    <AssignMessage name="Remove-Authorization-Header">
+        <DisplayName>Remove APIKey QP</DisplayName>
+        <Remove>
+            <Headers>
+                <Header name="Authorization"/>
+            </Headers>
+        </Remove>
+        <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+        <AssignTo createNew="false" transport="http" type="request"/>
+    </AssignMessage>
+    ```
 
-> ![](./media/image18.png)
+  As a security measure, the ‘Remove Authorization Header’ policy removes the
+  Authorization header from the HTTP request message so it is not sent to the
+  backend service. In fact, if the Authorization header is not removed, the
+  Backend-as-a-Service API will throw an invalid token error.
 
-        ii.  The ‘Remove Authorization Header’ policy will get added after the
-            ‘Response Cache’ policy. Drag and move the ‘Remove
-            Authorization Header’ policy to be before the ‘Response Cache’
-            policy
+3. Click "Save" to save your API Proxy
 
-> ![](./media/image26.png)
+4. Use the "Deployment" dropdown to deploy this new API Proxy to "test"
+  ![](./media/click-to-deploy.png)
 
-    g.  For the ‘Remove Authorization Header’ policy, change the XML
-        configuration of the policy using the ‘Code: Remove Authorization
-        Header’ panel as follows:
+Done! OK, Let's test it. 
 
-  ```
-  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-  <AssignMessage async="false" continueOnError="false" enabled="true" name="Remove-Authorization-Header">
-  <DisplayName>Remove Authorization Header</DisplayName>
-  <Remove>
-  <Headers>
-  <Header name="Authorization"></Header>
-  </Headers>
-  </Remove>
-  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
-  <AssignTo createNew="false" transport="http" type="request"/>
-  </AssignMessage>
-  ```
+### Test OAuth 2.0 Token Validation
 
-*(You can find the policy xml*
-[**here**](https://gist.github.com/prithpal/aaee5179e37a18a6d9ea)*.
-Click the “Raw” button and copy/paste into your policy editor).*
+1. In the Edge UI, switch to the Trace tab.
 
-As a security measure, the ‘Remove Authorization Header’ policy
-removes the ‘Authorization’ header from the HTTP request message so it
-is not sent to the backend service. In fact, if the ‘Authorization’
-header is not removed, the Backend-as-a-Service API will throw an
-invalid token error.
+2. Start a Trace session for the ‘{your_initials}_hotels_oauth’ proxy
 
-Note : You could also have this functionality as part of the “Remove
-APIKey QP” policy.
+3. Switch to Postman, and invoke the API, as you have done before.
+  Remember that the API basepath has changed. You must apply the _oauth suffix
+  to your API calls in Postman. 
 
-5) **Testing the Oauth2.0 Token Validation Policy**
+  Send `/GET hotels` request from Postman with the following query parameters:  
+  `zipcode=98101&radius=200`
 
-    a.  Testing the OAuth 2.0 Token Validation Policy without a Token
-
-        i. Start a Trace session for the ‘{your_initials}_hotels’ proxy
-
-        ii. Send a test ‘/GET hotels’ request from Postman with the following query parameters:
-         zipcode=98101&radius=200
-
-        Note : Replace ‘hotels’ API proxy to point to {your_initials}_hotel
-
-        iii.  As expected, a fault will be returned since a valid OAuth
-        Token has not been provided as part of the request:
-
-  ```
+  You should see a fault:
+  
+  ```json
   {
-  fault: {
-  faultstring: "Invalid access token",
-  detail: {
-  errorcode: "oauth.v2.InvalidAccessToken"
-  }
-  }
+    "fault": {
+      "faultstring": "Invalid access token",
+      "detail": {
+        "errorcode": "oauth.v2.InvalidAccessToken"
+      }
+    }
   }
   ```
+  
+  This shows that the OAuth2 Verification policy is being enforced as expected.
 
-        The above response shows that the OAuth2 Verification policy is being enforced as expected.
 
-        iv.  Review the Trace for the proxy and the returned response to ensure
-        that the flow is working as expected.
+4. Review the Trace for the proxy and the returned response to ensure
+   that the flow is working as expected.
+   
+5. Stop the Trace session for the ‘{your_initials}_hotels_oauth’ proxy
 
-        v. Stop the Trace session for the ‘{your_initials}_hotels’ proxy
 
-    b.  Testing the OAuth 2.0 Token Validation Policy with a Valid Token
+6. Now, obtain a valid token via client_credentials grant_type.
+
+
+**** RESUME heRE *****
+
+
+
 
         i.  You will obtain a valid oauth token by directly calling the
             ’oauth’ API proxy token endpoint and passing the consumer key
@@ -441,3 +479,26 @@ the various out-of-the-box security related policies that are available
 in Apigee Edge and to leverage a couple of those policies - API Key
 Verification and OAuth 2.0 client credentials grant - to secure your
 APIs.
+
+
+To support use cases with grant types other than client credentials,
+the OAuth proxy must be configured with authorization endpoints. For
+additional information, see [configuring authorization
+endpoints](http://apigee.com/docs/api-services/content/oauth-endpoints)
+and [authorizing requests using OAuth
+2.0](http://apigee.com/docs/api-services/reference/authorize-requests-using-oauth-20).
+
+
+
+====
+
+    You will use the Consumer Secret (i.e. the API
+    Secret) in the next section when the security policy is changed from
+    API Key Verification to an OAuth Token Validation policy.
+
+    ***** DINO REsumE heRE ****
+    Friday, 29 July 2016, 17:39
+
+    **Add security using OAuth 2.0: Client Credentials Grant**
+
+====
