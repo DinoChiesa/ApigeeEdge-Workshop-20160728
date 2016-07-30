@@ -1,6 +1,6 @@
 ![](./media/image35.png)
 
-# Lab 1 – Design and Build a simple API Proxy
+# Design and Build a simple API Proxy
 
 ## Objectives
 

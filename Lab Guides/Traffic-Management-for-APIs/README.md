@@ -1,6 +1,6 @@
 ![](./media/image06.png)
 
-# Lab 2 - Traffic Management for APIs
+# Traffic Management for APIs
 
 ![](./media/image18.png)
 
