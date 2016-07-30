@@ -72,9 +72,12 @@ http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/#/
 ![](./media/image37.png)
 
 2. On the right side of the editor, in the documentation view, scroll
-down *about 65% of the page* to **GET /hotels** request.   Click the
-**Try this operation** button:  
-![](./media/image40.png)
+  down *about 65% of the page* to **GET /hotels** request.   Click the
+  **Try this operation** button:  
+  ![](./media/image40.png)
+
+  Note and ignore the warning about the "cross-origin call". 
+  
 
 3. Click on Send Request and observe the response  
 ![](./media/image39.png)
@@ -111,32 +114,43 @@ for the actual API implementation, sometimes called a "backend". Instead of clie
 * ...you decouple the developer-facing API from the API exposed by 
 backend services. This brings several advantages:
 
-  * it shields "consumer developers" - those who are using the APIs - from changes in backend code or implementation.  As development teams make backend changes, consumer developers
+* ...it shields "consumer developers" - those who are using the APIs - from changes in backend code or implementation.  As development teams make backend changes, consumer developers
 continue to call the same API without any interruption.
 
-  * it enables you, the API Provider, to innovate at the edge without impacting internal applications and
+* ...it enables you, the API Provider, to innovate at the edge without impacting internal applications and
 development teams. Edge acts as a *service virtualization* layer. For example For example, you could convert an XML-based API to a JSON-based API just by introducing a few rules in the proxy configuration, without changing any backend code. You could introduce new services that compose multiple backend services. 
+
+* ...you can offload overhead away from the backend infrastructure. For example, suppose you have an old database that is simply not able to handle the load from API clients. The API Proxy, with caching, can relieve that pressure. 
+
 
 In short, the API Proxy metaphor enables *API Management*.
 
 ### Describing an API Proxy 
 
-In Apigee Edge, an API proxy is described by a set of configurations, usually specified in a bundle of XML configuration files.
-These configuration files will stipulate what inbound requests the proxy listens for (all of them?  just those on url path /v1/service ?), whether to use TLS (we hope so) and if so, which ciphers to use, whether to use caching, how to verify API keys, and so on.  All of these basic things
-can be done with simple configuration of Apigee Edge capabilities. No coding. 
+In Apigee Edge, an API proxy is described by a set of configurations, usually
+specified in a bundle of XML configuration files. These configuration files will
+stipulate what inbound requests the proxy listens for (all of them?  just those on
+url path /v1/service ?), whether to use TLS (we hope so) and if so, which ciphers
+to use, whether to use caching, how to verify API keys, and so on.  All of these
+basic things can be done with simple configuration of Apigee Edge capabilities. No
+coding.
 
-Apigee Edge also allows people to extend the capabilities with custom code. For example, if you would like to design an API Proxy that performs custom augmentation of the response received from the backend, you could do that by writing some JavaScript. 
+Apigee Edge also allows people to extend the capabilities with custom code. For
+example, if you would like to design an API Proxy that performs custom
+augmentation of the response received from the backend, you could do that by
+writing some JavaScript.
 
-The configuration 
-and any custom code you provide (such as
-JavaScript and Java), hosted in Apigee Edge, implements the facade for your backend HTTP
-services.
+The configuration and any custom code you provide (such as JavaScript and Java),
+hosted in Apigee Edge, implements the facade for your backend HTTP services.
 
-### How an API Proxy works in Apigee Edge
+### How an API Proxy Works in Apigee Edge
 
 API proxies in Apigee Edge manage request and response messages using a 'pipeline'
-processing model.  A request arrives in Edge, and according to the configuration you provide, a series of steps operates on the inbound message. Check for a key. Enforce a Quota, transform a message, and so on.  You customize the behavior of your
-API Proxy by attaching Policies (or logical processing steps) to request and response Flows.
+processing model.  A request arrives in Edge, and according to the configuration
+you provide, a series of steps operates on the inbound message. For example, you can configure the proxy to check for and verify a
+key; enforce a Quota; transform a message; and so on.  You customize the behavior
+of your API Proxy by attaching Policies (or logical processing steps) to request
+and response Flows.
 
 In an API proxy configuration, there are two types of *endpoints*:
 
@@ -173,8 +187,7 @@ environment](http://apigee.com/docs/api-services/content/using-apigee-edge-devel
 
 Some API teams build APIs using Design-First approach: they start by
 creating an OpenAPI
-([f.k.a.](http://www.urbandictionary.com/define.php?term=FKA)
-Swagger) document, experimenting with it in a designer tool, before
+(f.k.a. Swagger) document, experimenting with it in a designer tool, before
 generating code.
 
 Most teams typically have many existing back-end services and APIs
@@ -231,15 +244,15 @@ http://playground.apistudio.io/9dd084db-7136-460e-8fe8-bde4ecafdc93/spec
 10. Verify that it looks mostly like this, except with **YOUR** initials in place of dpc: 
 ![](./media/Build-a-Proxy.png)
 
-11. click next.
+11. click **next**.
 
-12. Leave all of the **operations** selected from the OpenAPI spec to proxy. Click next.
+12. Leave all of the **operations** selected from the OpenAPI spec to proxy. Click **next**.
 ![](./media/image47.png)
 
 13. Choose **Pass through (none)** for the authorization in order to choose not to apply any security policy for the proxy. We'll get to security in a later lab exercise. Click next. 
 ![](./media/image48.png)
 
-14. Select only the **default** virtual host (http only) and Click next
+14. Select only the **default** virtual host (http only) and Click **next**.
 ![](./media/image49.png)
 
 15. Ensure that only the **test** environment is selected to deploy to and click **Build and Deploy**. 
@@ -264,7 +277,7 @@ rest of the labs.
 1. Launch **Postman**
 ![](./media/Launch-Postman.png)
 
-2. If you have not already done so, within Postman, import [the collection used in this workshop](../../Resources/Apigee-Edge-Workshop-20160726.postman_collection). To do so, you need to save that file from github to your local workstation, then import the saved file from your workstation or laptop. 
+2. If you have not already done so, within Postman, import [the collection used in this workshop](../../Resources/Apigee-Edge-Workshop-20160726.postman_collection). To do so, you need to save that file from GitHub to your local workstation, then import the saved file from your workstation or laptop. 
 ![](./media/Postman-Import.png)
 
 3. If you have not already done so, within Postman, import [the environment](../../Resources/Workshop-20160726.postman_environment). To do so, you need to save that file from github to your local workstation, then import the saved file from your workstation or laptop. 
@@ -345,7 +358,6 @@ Things to consider:
 ![](./media/cap250-select-trace-tab.png)
 
 2. In that tab, select the correct environment from the **Deployment to Trace** drop-down. In your case there should only be one environment to choose - **Environment test, Revision 1**.  
-![](./media/image05.png)
 
 3. click Start Trace Session button.
 
