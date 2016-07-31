@@ -73,7 +73,7 @@ and secure API proxies with OAuth 2.0 using the four grant types that
 are part of OAuth 2.0. For more information, see [OAuth 2.0
 ](http://apigee.com/docs/api-services/content/oauth-introduction)and
 the [OAuth the Big
-Picture](https://pages.apigee.com/oauth-big-picture-ebook.html) Apigee
+Picture](http://apigee.com/about/blog/technology/oauth-big-picture-free-ebook) Apigee
 eBook.
 
 ### OAuth v1.0a
@@ -168,7 +168,7 @@ Masking](http://apigee.com/docs/api-services/content/data-masking)[
 
 
 
-## Part 2: OAuth 2.0 Token verification
+## Part 2: OAuth 2.0 Token Verification
 
 **Estimated Time: 10 minutes**
 
@@ -194,9 +194,9 @@ request in the `Authorization` header.
     ![](./media/save-as-new-api-proxy.png)
 
   c. name your new API Proxy with an _oauth suffix. For example, if your
-    prior proxy was named `dpc_hotels` , then name the new one, `dpc_hotels_oauth`.
+    prior proxy was named `dpc_hotels`, then name the new one, `dpc_hotels_oauth`.
 
-2. Modify the basepath at which the API Proxy listens.
+2. Modify the base settings for the API Proxy
 
   a. click the `Develop` tab.
     ![](./media/click-develop-tab.png)
@@ -212,11 +212,13 @@ request in the `Authorization` header.
   e. Append the suffix "_oauth" to the basepath. Case matters. 
     ![](./media/append-OAuth-to-basepath.png)
 
+    This will change the base url path at which the API Proxy listens. 
+
   f. Click the blue "Save" button.
 
-  You have now saved a new API proxy, with a new basePath. 
+  You have now saved a new API proxy, with a new basepath, and a new name and display name. 
 
-  For consideration and discussion: why did we need to modify the basePath of this proxy?
+  For consideration and discussion: why did we need to modify the basepath of this proxy?
   
 
 ### About OAuth2.0 Grant Types and Apigee Edge
@@ -279,7 +281,7 @@ cases, see [Introduction to OAuth
 2.0](http://apigee.com/docs/api-services/content/oauth-introduction).
 
 
-### Modify the API Product to include the new API Proxy
+### Modify the API Product to Include the New API Proxy
 
 1. Navigate to the API Products page in the Edge UI, then select
   *your* API Product.
@@ -299,7 +301,7 @@ cases, see [Introduction to OAuth
 Now, the API Product includes two API Proxies. 
 
 
-### Modify the New Proxy to use Token Validation
+### Modify the New Proxy to Use Token Validation
 
 1. Add an OAuth 2.0 Token Validation Policy
 
@@ -324,7 +326,7 @@ Now, the API Product includes two API Proxies.
 
   g. Click "Add"
 
-    The ‘Validate OAuth v2 Token’ policy will get added after the
+    The `Oauth-v20-1` policy will get added after the
     ‘Response Cache’ policy. Drag and move the OAuth v2.0
     policy so that it appears before the ‘Remove APIKey QP’ policy.
     ![](./media/click-and-drag-oauth.gif)
@@ -340,7 +342,10 @@ Now, the API Product includes two API Proxies.
       <GenerateResponse enabled="true"/>
     </OAuthV2>
     ```
-
+    
+    Note: pasting this configuration in will change the name and display name of
+    the policy.
+    
     The OAuthV2 policy in Apigee Edge performs many tasks: generating tokens,
     validating tokens, invalidating tokens, and so on. The value of the
     **Operation** element indicates the action to take. In this case, we want
@@ -363,7 +368,6 @@ Now, the API Product includes two API Proxies.
   
     ```xml
     <AssignMessage name="Remove-Authorization-Header">
-        <DisplayName>Remove APIKey QP</DisplayName>
         <Remove>
             <Headers>
                 <Header name="Authorization"/>
@@ -379,10 +383,16 @@ Now, the API Product includes two API Proxies.
   backend service. In fact, if the Authorization header is not removed, the
   Backend-as-a-Service API will throw an invalid token error.
 
-3. Click "Save" to save your API Proxy
+3. Click "Save" to save your API Proxy. Again, you may
+   see the new revision popup. You should save a new revision.
 
-4. Use the "Deployment" dropdown to deploy this new API Proxy to "test"
+4. Use the "Deployment" dropdown to deploy the latest revision this new API Proxy to "test"
   ![](./media/click-to-deploy.png)
+
+  If for any reason an older revision of this proxy is deployed, you can use the
+  revision dropdown to select older revisions and undeploy them, before
+  deploying the latest.
+
 
 Done! OK, Let's test it. 
 

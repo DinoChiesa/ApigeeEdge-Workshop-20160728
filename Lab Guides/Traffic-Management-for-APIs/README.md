@@ -94,7 +94,7 @@ Apigee Edge supports different caching policies enabling you to:
 * Persist data across transactions: You can store session data for reuse
   across HTTP transactions.
 
-* Support security:You may need "scope" access to the contents of a
+* Support security: You may need "scope" access to the contents of a
   cache so it can only be accessed in a particular environment or by a
   specific API proxy.
 
@@ -173,8 +173,11 @@ added a policy, and you will be presented with this view:
   ```
 
 9. Save the changes to the proxy and ensure that it is deployed
-successfully to the ‘test’ environment.
-![](./media/apiproxy-save.png)
+  successfully to the ‘test’ environment. (Note: If the proxy is in a
+  deployed state when you save it, after the save, Edge will deploy the
+  modified version.)
+
+  ![](./media/apiproxy-save.png)
 
   Think of Spike Arrest as a way to generally protect against traffic
   spikes (system wide) rather than as a way to limit traffic to a
@@ -208,7 +211,9 @@ successfully to the ‘test’ environment.
     of 100ms will fail. Also, an 11th request within a second will fail.
 
 
-10. Now, test the proxy.  Use Postman to quickly send more than 2 requests in 6 seconds and observe that certain requests will receive an error with the errorCode `policies.ratelimit.SpikeArrestViolation`.
+10. Now, test the proxy. Use Postman to quickly send more than 2
+  requests in 6 seconds and observe that certain requests will receive an
+  error with the errorcode `policies.ratelimit.SpikeArrestViolation`.
 
 11. Let's use the Trace UI to examine what's happening. Return to the Edge UI, and select the Trace tab again. 
 ![](./media/start-a-trace-session.png)
@@ -224,7 +229,7 @@ successfully to the ‘test’ environment.
 
 **Estimated Time: 10 minutes**
 
-Now we'll introduce the ResponseCache policy.  
+Now we'll introduce the ResponseCache policy. 
 
 1. Go to the Apigee Edge Management UI browser tab.
 
@@ -239,7 +244,7 @@ Now we'll introduce the ResponseCache policy.
 
 5. From the resulting modal dialog, Select the ‘Response Cache’ policy, and click Add.
 You should see something like the following: 
-![](./media/after-add-ResponseCache.png.png)
+![](./media/after-add-ResponseCache.png)
 
   You have now added a second policy to the Request Pre-Flow. Remember,
   these are policies that will run for every inbound request handled by
@@ -273,43 +278,47 @@ You should see something like the following:
   day, for example. For more information, see [the
   documentation](http://apigee.com/docs/api-services/reference/response-cache-policy).
 
-  Apigee Edge provides a default cache resource that can be used for
-  quick testing, which is what is being used in this lesson. Cache
-  policies like ResponseCache can also used named cache resources.  A
-  Named cache resource can be manipulated administratively, outside of
-  policy control. For examine, if you would like to clear a cache
-  administratively, you can do that with a named cache resource. It
-  takes just a moment.
+  Apigee Edge provides a default, "unnamed" cache resource, which is
+  what is being used in this lesson. It works just fine, but there is
+  one downside: It is not possible to administratively operate on the
+  cache - to clear it, for example.
+
+  Each Cache policy, including ResponseCache, can use a *named cache
+  resource*.  A named cache resource can be manipulated
+  administratively, outside of policy control. For example, if you would
+  like to clear a cache administratively, you can do that with a named
+  cache resource. It takes just a moment.  You will have the opportunity
+  to explore that later.
 
   For more information on Cache Resources, see [Manage Caches for an
   Environment](http://apigee.com/docs/api-services/content/manage-caches-environment).
 
 
-10. Your Proxy Endpoints → Default → PreFlow should now look as follows:
+6. Your Proxy Endpoints → Default → PreFlow should now look as follows:
 ![](./media/hotels-proxy-preflow-two-policies.png)
 
-11. Click the Target Endpoints → default → PostFlow
+7. Click the Target Endpoints → default → PostFlow
 ![](./media/click-targetendpoints-default-postflow.png)
 
-12. Verify that it looks as follows:
+8. Verify that it looks as follows:
 ![](./media/targetendpoints-default-postflow.png)
 
-13. Save the changes to the API Proxy, and wait for it to successfully deploy.
+9. Save the changes to the API Proxy, and wait for it to successfully deploy.
 
-14. Now, let's test the modifications you've made.  Click the Trace tab and start a Trace session.
+10. Now, let's test the modifications you've made.  Click the Trace tab and start a Trace session.
 
-15. From Postman, send a test ‘/GET hotels’ request from Postman using the following query parameters:
+11. From Postman, send a test ‘/GET hotels’ request from Postman using the following query parameters:
 `zipcode=98101&radius=200`
 ![](./media/Postman-send-parameterized-query.png)
 
   In the Postman UI, you should see a success response, and a timing.
   ![](./media/Postman-success-1.png)
 
-16. Wait for 6 to 10 seconds, to avoid the Spike Arrest policy from
+12. Wait for 6 to 10 seconds, to avoid the Spike Arrest policy from
   stopping your requests) and send the same request again from
   Postman. You should see a faster response this time.
 
-17. Go back to the Edge UI, in the Trace view and review the transaction
+13. Go back to the Edge UI, in the Trace view and review the transaction
   map of both the requests including the overall elapsed time to process
   both requests.
 

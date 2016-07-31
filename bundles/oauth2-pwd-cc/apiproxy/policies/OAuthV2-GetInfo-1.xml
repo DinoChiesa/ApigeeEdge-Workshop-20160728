@@ -1,0 +1,13 @@
+<GetOAuthV2Info name='OAuthV2-GetInfo-1'>
+  <ClientId ref='inbound_client_id'/>
+  <!--
+      On Success, the following flow variables will be set.
+      oauthv2client.OAuthV2-GetInfo-1.client_id
+      oauthv2client.OAuthV2-GetInfo-1.client_secret
+      oauthv2client.OAuthV2-GetInfo-1.redirection_uris
+      oauthv2client.OAuthV2-GetInfo-1.developer.email
+      oauthv2client.OAuthV2-GetInfo-1.developer.app.name
+      oauthv2client.OAuthV2-GetInfo-1.developer.id
+      oauthv2client.OAuthV2-GetInfo-1.{custom_attribute_name}
+  -->
+</GetOAuthV2Info>

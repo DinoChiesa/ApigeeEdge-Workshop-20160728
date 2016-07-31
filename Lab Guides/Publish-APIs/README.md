@@ -91,31 +91,42 @@ of a developer to an app and to an API:
   
   (You can cut-and-paste the above into the policy XML editor)
 
-  Note the `&lt;APIKey&gt;` element, which identifies where the policy
+  Note the `<APIKey...>` element, which identifies where the policy
   should check for the API key. In this example, the policy looks for
   the API key in a query parameter named 'apikey'. API keys can be
   located in a query parameter, a form parameter, or an HTTP header.
-  You need only to use a difference expression to reference an apikey in these different locations.
-  For example, `request.header.key` or `request.formparam.apikey`. Also, it doesn't have to be named "apikey". Name it whatever you like. 
+  You need only to use a different expression to reference an apikey in
+  these different locations. For example, `request.header.key` or
+  `request.formparam.apikey`. Also, the header, query parameter, or form
+  parameter doesn't have to be named "apikey". Name it whatever you
+  like.
 
   For more, see [the documentation on the Verify API Key
   policy](http://apigee.com/docs/api-services/reference/verify-api-key-policy).
 
+10. Save the API Proxy.
 
-## Part 2: Removing the API Key from the query string
+
+## Part 2: Removing the API Key from the Query String
 
 **Estimated Time: 3 minutes**
 
-Apigee Edge acts as an http proxy.  If all of the traffic management and key
+Apigee Edge acts as an http proxy. If all of the traffic management and key
 verification policies pass, then a *copy of* the inbound request is sent
 to the backend. This includes all of the headers and query parameters
-that were originally sent in.  In many cases you'd like to modify the
+that were originally sent in. In many cases you'd like to modify the
 copy of the request message before it gets proxied to the backend -
 for example, you may wish to inject a header with some client
-information.  In this case, we will remove information from the
-request; we will remove the API Key.  The API Key should be considered
-a secret, and need not be sent to the backend. 
+information. In this case, we will remove information from the
+request; we will remove the API Key. The API Key should be considered
+a secret, and need not be sent to the backend. Let's remove it.
 
+We'll do that with a particular policy in Apigee Edge known as
+`AssignMessage`. The name implies "assign something to a new message
+variable", and the `AssignMessage` policy *can* do that.  But it can
+also do other things, for example, modify an existing message, by adding
+or removing query parameters, headers, and so on. We will use
+`AssignMessage` to remove a query parameter.
 
 1. In the API Proxy Editor, Click on “+ Step” on the Request Pre-Flow.  
   ![](./media/proxy-editor-add-another-step.png)
@@ -124,15 +135,14 @@ a secret, and need not be sent to the backend.
   "Add". You will now see something like the following:  
   ![](./media/proxy-with-four-policies.png)
 
-
-3. Click-and-drag the AssignMessage policy so that it appears before the
+3. Click-and-drag the `AssignMessage` policy so that it appears before the
   Response Cache policy:  
   ![](./media/click-and-drag-AM.gif)
 
-3. Now, verify that you have selected the appropriate policy.  
+4. Now, verify that you have selected the appropriate policy.  
   ![](./media/ensure-correct-policy-selection-2.png)
 
-4. Replace the policy XML for the AssignMessage policy with the following:
+5. Replace the policy XML for the AssignMessage policy with the following:
   ```xml
   <AssignMessage name="Remove-APIKey-QP">
     <DisplayName>Remove APIKey QP</DisplayName>
@@ -149,11 +159,41 @@ a secret, and need not be sent to the backend.
   This tells Apigee Edge to remove the queryparam "apikey" from the copy
   of the request message that will be sent to the backend.  You could
   also use this policy to remove other information, or to insert
-  information into the request. 
+  information into the request.
+
+  You may notice that by applying this XML, we are implicitly changing
+  the name and display name of this AssignMessage policy. Just sayin.
     
-7. **Save** the API proxy configuration.  
+6. **Save** the API proxy configuration.
+
   ![](./media/click-to-save.png)
 
+  Because we have added a policy, Edge will increment the revision
+  number, and will ask you to confirm this.  Click "Save as New
+  Revision" when prompted.
+  ![](./media/part2-step6-save-new-revision.png)
+
+
+7. You will now have two revisions of the API Proxy.
+
+  The revision dropdown in the UI allows you to select between them. 
+  ![](./media/revision-dropdown.png)
+  
+  In fact Edge can track many revsions of the same API proxy. This is
+  handy if you're interactively experimenting with different logic or
+  policy configuration. It's easy to flip back and forth between
+  different revisions.
+  
+  You shouldn't think of Edge as a source-code management system - don't
+  think of the revisions as "commits" in the git style. They're just
+  distinct versions of the proxy. You will want to manage your
+  configuration in a real source-code management system. But that is out
+  of scope for this exercise.
+
+  For now, we want to make sure the latest revision is deployed.  Select
+  revision 1, then undeploy it.  Then select revision 2 and deploy it.
+  ![](./media/revisions-make-sure.png)
+  
 
 ## Part 3: Testing API Key Verification
 
@@ -430,7 +470,7 @@ for Apigee Edge.
   b. From the devportal tab, copy (Ctrl-C) the Consumer Secret string. 
   
   c. From Postman send the ‘/GET hotels’ request, with the following query parameters:  
-  `zipcode=98101&radius=200&apikey={apikey portal}`
+  `zipcode=98101&radius=200&apikey={apikey}`
 
   d. You should see a successful response.
 
@@ -609,16 +649,16 @@ APIs available on your portal.
 
 In this exercise, you learned:
 
-* how API keys can be used as an application
+* How API keys can be used as an application
 identifier, or client credential.
 
-* how APIs can be packaged into API Products.
+* How APIs can be packaged into API Products.
 
-* the purpose and function of the Apigee Edge  developer portal
+* The purpose and function of the Apigee Edge  developer portal
 
-* how developers are onboarded and how developer applications are registered.
+* How developers are onboarded and how developer applications are registered.
 
-* how to publish API documentation to the developer portal
+* How to publish API documentation to the developer portal
 
 * How the interactive documentation called "Smartdocs" works
 

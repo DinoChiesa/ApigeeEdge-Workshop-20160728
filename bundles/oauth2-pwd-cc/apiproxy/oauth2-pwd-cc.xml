@@ -1,0 +1,12 @@
+<APIProxy revision='1' name='oauth2-pwd-cc'>
+  <ConfigurationVersion minorVersion='0' majorVersion='4'/>
+  <CreatedAt>1458959730864</CreatedAt>
+  <CreatedBy>dino</CreatedBy>
+  <Description>Dispense OAuth v2.0 Bearer tokens for password and client_credentials grant_types. In this proxy, the user authentication is handled by a mock service.</Description>
+  <DisplayName>oauth2-pwd-cc</DisplayName>
+  <LastModifiedAt>1469937086645</LastModifiedAt>
+  <LastModifiedBy>orgAdmin</LastModifiedBy>
+  <TargetEndpoints>
+    <TargetEndpoint>default</TargetEndpoint>
+  </TargetEndpoints>
+</APIProxy>
