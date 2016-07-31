@@ -511,11 +511,11 @@ Done! OK, Let's test it.
 
 That completes this hands-on lesson. In this lesson you learned:
 
-- the security policies available in Apigee Edge
+- The security policies available in Apigee Edge
 
-- the OAuth grant types, and how Apigee Edge supoprts them
+- The OAuth grant types, and how Apigee Edge supoprts them
 
-- how API Key verification differs from OAuth token verification
+- How API Key verification differs from OAuth token verification
 
-- how to use OAuth Token verification in an Apigee Edge API Proxy. 
+- How to use OAuth Token verification in an Apigee Edge API Proxy. 
 
