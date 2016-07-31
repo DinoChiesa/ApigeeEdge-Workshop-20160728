@@ -26,9 +26,9 @@ In this exercise, we'll do all of these things.
 
 The total estimated time required for this exercise: 60 minutes.
 
-## Pre-Requisites
+## Prerequisites
 
--   At a minimum, Lab 1 is completed
+-   At a minimum, Lab 2 is completed
 -   A developer portal is provisioned
 
 

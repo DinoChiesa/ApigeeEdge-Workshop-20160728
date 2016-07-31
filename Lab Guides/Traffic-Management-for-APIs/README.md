@@ -12,7 +12,7 @@ created in the previous lesson.
 
 The total estimated time required for this exercise: 30 minutes.
 
-## Pre-Requisites
+## Prerequisites
 -   Lab 1 is completed
 
 ## Background

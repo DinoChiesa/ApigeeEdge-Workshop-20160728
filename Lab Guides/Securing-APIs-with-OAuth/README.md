@@ -21,9 +21,9 @@ client-credentials two-legged OAuth flow.
 
 ## Prerequisites
 
--   At a minimum, Lab 1 is completed.
+-   At a minimum, Lab 3 is completed.
 -   A preliminary understanding of OAuth 2.0.
--   Apigee Oauth proxy deployed to your organization.
+-   Apigee OAuth proxy deployed to your organization. (Your instructor normally does this.)
 
 
 ## Part 1: Overview
