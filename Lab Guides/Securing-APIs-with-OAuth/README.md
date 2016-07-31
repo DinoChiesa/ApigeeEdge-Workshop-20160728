@@ -434,22 +434,23 @@ Done! OK, Let's test it.
   Previously we have configured an OAuth-token dispensing proxy into the
   Edge organization. It's ready and available for you to use. 
 
-  You must obtain an OAuth token by calling the ’oauth’ API proxy token endpoint
-  and passing the consumer key and consumer secret of the app you have
+  You must obtain an OAuth token by calling the ’oauth’ API proxy token endpoint,
+  passing the consumer key and consumer secret of the app you have
   registered on the developer portal.
 
   a. Using Postman, send the `POST /token’ request.
-    ![](./media/postman-click-specify-send.png)
-    
-    You will need to specify the consumer_key and consumer_secret (aka client_id
+  
+    You will need to specify both the consumer_key and consumer_secret (aka client_id
     and client_secret) in the appropriate places in the form body.
 
     Copy-paste the Consumer Key and Consumer Secret from the
     developer portal, or from the Edge Admin UI. As you copy-paste, remove any
     spaces before and after the values of the Consumer Key and Consumer Secret.
 
-  b. Review the response of the `POST /token` request. Copy the value of the
-    ‘access_token’ attribute to use in the next step. It should look like this:
+    ![](./media/postman-click-specify-send.png)
+    
+
+  b. Review the response of the `POST /token` request. The response should look like this:
     
     ![](./media/postman-token-response.png)
 
@@ -468,12 +469,14 @@ Done! OK, Let's test it.
       "note": "All this metadata is attached to the token in the token store within Edge."
     }    
     ```
+
+    Copy the value of the ‘access_token’ attribute to use in the next step.
     
-    This response give basic information about the token. Observe the
-    access_token and the expiry values - those are most critical.  You, as API
-    Publisher, have control over how much information to return in an OAuth
-    token response. You could simply return the token and the expiry, or you
-    could return additional information at your discretion.
+    BTW, this response gives basic information about the token. Observe the
+    access_token and the expiry values - these are the most critical pieces of
+    information. You, as API Publisher, have control over how much information
+    to return in an OAuth token response. You could simply return the token and
+    the expiry, or you could return additional information at your discretion.
 
     Now, we will use that token in a request.
     
