@@ -549,7 +549,7 @@ If you wish to epxlore the ability to check token scopes during validation, you 
   scope.
 
   Requests for these are available in the postman collection.  You will need to specify your
-  own bearer token, obtained in step 2 above, within the Authorization header of the request.
+  own bearer token, obtained in step 3 above, within the Authorization header of the request.
 
 4. Try with other usernames, and you will get tokens with different
   scopes. Run the same tests (/t1, /t2, /t3, /t4) with those other tokens to
