@@ -9,7 +9,20 @@
 		"166629c2-02bf-f894-2602-4e7f00c52e18",
 		"93e17fdf-307f-d57a-832f-e9b0e63f4f39"
 	],
-	"folders": [],
+	"folders": [
+		{
+			"id": "19d2e7b3-5a5e-6c35-20f3-c9c42175b84f",
+			"name": "Password Grant Tests",
+			"description": "",
+			"order": [
+				"9633d81c-0eb2-7133-c260-68b825ef54c5",
+				"e028ef01-a967-8228-b28d-f2e5e2b047a6",
+				"7685bc61-8dc1-d18a-88f7-cba9bc2abc3a",
+				"c06d81f9-dacc-7c95-3999-4f495fc8e681"
+			],
+			"owner": "2578"
+		}
+	],
 	"timestamp": 1434532061761,
 	"owner": "2578",
 	"public": false,
@@ -67,6 +80,42 @@
 			"name": "POST /token - OAuth Token - Client Cred",
 			"description": "",
 			"collectionId": "f235cd0a-9196-dcd0-cd97-fd1c2600e837"
+		},
+		{
+			"id": "7685bc61-8dc1-d18a-88f7-cba9bc2abc3a",
+			"headers": "Authorization: Bearer insert-your-access-token-here\n",
+			"url": "https://{{org}}-{{env}}.apigee.net/v1/oauth-resources/t3",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [
+				{
+					"key": "username",
+					"value": "insert-your-username-here",
+					"type": "text"
+				},
+				{
+					"key": "password",
+					"value": "insert-your-password-here",
+					"type": "text"
+				},
+				{
+					"key": "grant_type",
+					"value": "password",
+					"type": "text"
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1470168106994,
+			"name": "GET /resources/t3 - OAuth PG",
+			"description": "t3 tests for delete scope on the OAuth token.",
+			"collectionId": "f235cd0a-9196-dcd0-cd97-fd1c2600e837",
+			"responses": [],
+			"folder": "19d2e7b3-5a5e-6c35-20f3-c9c42175b84f"
 		},
 		{
 			"id": "82931eba-70a3-8001-d915-70f789e13c04",
@@ -138,6 +187,78 @@
 			"responses": []
 		},
 		{
+			"id": "9633d81c-0eb2-7133-c260-68b825ef54c5",
+			"headers": "Authorization: Bearer insert-your-access-token-here\n",
+			"url": "https://{{org}}-{{env}}.apigee.net/v1/oauth-resources/t1",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [
+				{
+					"key": "username",
+					"value": "insert-your-username-here",
+					"type": "text"
+				},
+				{
+					"key": "password",
+					"value": "insert-your-password-here",
+					"type": "text"
+				},
+				{
+					"key": "grant_type",
+					"value": "password",
+					"type": "text"
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1470167847198,
+			"name": "GET /resources/t1 - OAuth PG",
+			"description": "t1 tests for read scope on the OAuth token.",
+			"collectionId": "f235cd0a-9196-dcd0-cd97-fd1c2600e837",
+			"responses": [],
+			"folder": "19d2e7b3-5a5e-6c35-20f3-c9c42175b84f"
+		},
+		{
+			"id": "c06d81f9-dacc-7c95-3999-4f495fc8e681",
+			"headers": "Authorization: Bearer insert-your-access-token-here\n",
+			"url": "https://{{org}}-{{env}}.apigee.net/v1/oauth-resources/t4",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [
+				{
+					"key": "username",
+					"value": "insert-your-username-here",
+					"type": "text"
+				},
+				{
+					"key": "password",
+					"value": "insert-your-password-here",
+					"type": "text"
+				},
+				{
+					"key": "grant_type",
+					"value": "password",
+					"type": "text"
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1470168103078,
+			"name": "GET /resources/t4 - OAuth PG",
+			"description": "t4 tests for otherscope scope on the OAuth token.",
+			"collectionId": "f235cd0a-9196-dcd0-cd97-fd1c2600e837",
+			"responses": [],
+			"folder": "19d2e7b3-5a5e-6c35-20f3-c9c42175b84f"
+		},
+		{
 			"id": "df35eadd-4796-369b-82c2-cc1d2bef735b",
 			"url": "http://{{org}}-{{env}}.apigee.net/v1/{{initials}}_hotels/hotels",
 			"preRequestScript": "",
@@ -154,6 +275,42 @@
 			"description": "",
 			"collectionId": "f235cd0a-9196-dcd0-cd97-fd1c2600e837",
 			"responses": []
+		},
+		{
+			"id": "e028ef01-a967-8228-b28d-f2e5e2b047a6",
+			"headers": "Authorization: Bearer insert-your-access-token-here\n",
+			"url": "https://{{org}}-{{env}}.apigee.net/v1/oauth-resources/t2",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [
+				{
+					"key": "username",
+					"value": "insert-your-username-here",
+					"type": "text"
+				},
+				{
+					"key": "password",
+					"value": "insert-your-password-here",
+					"type": "text"
+				},
+				{
+					"key": "grant_type",
+					"value": "password",
+					"type": "text"
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1470168034048,
+			"name": "GET /resources/t2 - OAuth PG",
+			"description": "t2 tests for write scope on the OAuth token.",
+			"collectionId": "f235cd0a-9196-dcd0-cd97-fd1c2600e837",
+			"responses": [],
+			"folder": "19d2e7b3-5a5e-6c35-20f3-c9c42175b84f"
 		}
 	]
 }
