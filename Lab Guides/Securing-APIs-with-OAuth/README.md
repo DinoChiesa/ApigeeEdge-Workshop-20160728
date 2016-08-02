@@ -533,6 +533,9 @@ If you wish to epxlore the ability to check token scopes during validation, you 
   grant_type=password&username=dino&password=chiesa
   ```
 
+  (This request is available in the postman collection.)
+  
+
 3. Invoke this target: `GET /v1/oauth-resources/t2` passing in an authorization header . Example: 
 
   ```
@@ -544,6 +547,15 @@ If you wish to epxlore the ability to check token scopes during validation, you 
   `write` scope.  Also try the `/t3` path, which checks for `delete`
   scope.
 
+  Requests for these are available in the postman collection.  You will need to specify your
+  own bearer token, obtained in step 2 above, within the Authorization header of the request.
+
+4. Try with other usernames, and you will get tokens with different
+  scopes. Run the same tests (/t1, t2, t3, t4) with those other tokens to
+  see how the behavior changes.
+
+5. You can examine the API Proxy design inside the Apigee Edge Administrative UI.
+  If you like, you can also turn on Tracing in Edge, to see the transactions as they occur. 
 
 
 ## Summary
