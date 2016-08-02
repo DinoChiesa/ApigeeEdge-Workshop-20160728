@@ -1,5 +1,5 @@
-<ProxyEndpoint name='default'>
-  <Description>the main proxy endpoint</Description>
+<ProxyEndpoint name='oauth-dispensary'>
+  <Description>the OAuth2 token dispensing endpoint</Description>
   <HTTPProxyConnection>
     <BasePath>/v1/oauth2-pwd-cc</BasePath>
     <Properties/>
@@ -52,6 +52,11 @@
         <Step>
           <Name>RF-AuthenticationFailed</Name>
           <Condition>request.formparam.grant_type = "password" AND user_is_authentic = false</Condition>
+        </Step>
+        <Step>
+          <!-- map user role to scopes -->
+          <Name>JS-MapUserRolesToScopes</Name>
+          <Condition>request.formparam.grant_type = "password"</Condition>
         </Step>
         <Step>
           <!-- this policy returns a payload immediately -->

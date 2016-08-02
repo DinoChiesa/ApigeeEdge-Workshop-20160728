@@ -3,12 +3,12 @@
 //
 // Tweaks the generated OAuth token response.
 //
-// last saved: <2016-June-09 15:12:29>
+// last saved: <2016-August-02 08:22:09>
 
 var b1 = JSON.parse(response.content),
     propertiesToRemove = ['status', 'refresh_token_status',
                           'token_type', 'organization_name', 'developer.email',
-                          'scope', 'refresh_count',
+                          'refresh_count',
                           'application_name'],
     dateFormatString = "Y-M-d\\TH:i:s.uP",
     d;

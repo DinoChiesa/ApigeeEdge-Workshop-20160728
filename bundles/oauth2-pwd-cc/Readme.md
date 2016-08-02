@@ -70,7 +70,7 @@ For the purposes of this example, your API product need not contain any API prox
    
    When you login as different users, you will see different roles returned in the user-roles property of the response payload.
 
-7. invoke the API proxy to retrieve a token via password grant_type as:
+7. invoke the API proxy to retrieve a token via client_credentials grant_type as:
    ```
    curl -i -X POST \
      -H 'content-type: application/x-www-form-urlencoded' \

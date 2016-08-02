@@ -1,0 +1,58 @@
+# -*- restclient -*-
+#
+# URLs for tickling the OAuth2 endpoints.
+# Yes, this runs in emacs.
+
+:apikey = MSJBQYpct5XGYMHgKebHglGrMaDir4sP
+:apiserver = https://cap500-test.apigee.net
+
+:dpc3_client_auth := (base64-encode-string "kPZXRYAovfp4KtZCg2s2szf8uR6g678L:OzxKV7XGCT5hJr5L")
+:dpc4_client_auth := (base64-encode-string "Y26X1A9HhlvsBMi20gRjg9JBTHpZ7WGo:FK61TmaXQGb124Yt")
+
+# password grant
+
+POST :apiserver/v1/oauth2-pwd-cc/token
+content-type: application/x-www-form-urlencoded
+Authorization: Basic :dpc4_client_auth
+
+grant_type=password&username=dino&password=chiesa
+
+
+# client_credentials grant
+
+POST :apiserver/v1/oauth2-pwd-cc/token
+content-type: application/x-www-form-urlencoded
+Authorization: Basic :client_auth
+
+grant_type=client_credentials
+
+
+# test the token t1 - check for Read Scope
+
+:dpc3_cctoken = U7EEhqkoke12CCTO31veNERMdmui
+:dpc3_pwtoken = neWETVkdM7VZxefAaE7KsZpi1sR1
+:dpc4_pwtoken = y3OISiBVGTMhp8GG4JYroAmvxJLY
+
+GET :apiserver/v1/oauth-resources/t1
+content-type: application/x-www-form-urlencoded
+Authorization: Bearer :dpc4_pwtoken
+
+# test the token t2 - check for Write scope
+
+GET :apiserver/v1/oauth-resources/t2
+content-type: application/x-www-form-urlencoded
+Authorization: Bearer :dpc4_pwtoken
+
+# test the token t3 - check for Delete scope
+
+GET :apiserver/v1/oauth-resources/t3
+content-type: application/x-www-form-urlencoded
+Authorization: Bearer :dpc4_pwtoken
+
+# test the token t4 - check for "otherscope"
+
+GET :apiserver/v1/oauth-resources/t4
+content-type: application/x-www-form-urlencoded
+Authorization: Bearer :dpc4_pwtoken
+
+

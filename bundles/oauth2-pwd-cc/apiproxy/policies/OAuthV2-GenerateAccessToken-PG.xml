@@ -32,7 +32,9 @@
   <!-- variable that specifies the requested grant type -->
   <GrantType>request.formparam.grant_type</GrantType>
 
-  <Scope>A B C</Scope>
+  <!-- variable that specifies the scopes to use. -->
+  <!-- Note: make sure that the API product has the scopes configured properly. -->
+  <Scope>user_scopes</Scope>
 
   <!--
       Optional: these attributes get associated to the token.
