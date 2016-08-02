@@ -439,7 +439,8 @@ Done! OK, Let's test it.
   registered on the developer portal will be insufficient, as it was added to the product
   before it was modified. So, 
 
-  a. Using the developer portal, create a new App, and retrieve a new key pair.
+  a. Using the developer portal, create a new App, and select **your**
+    API Product, and retrieve a new key pair.
   
     You will need to specify both the consumer_key and consumer_secret (aka client_id
     and client_secret) in the appropriate places in the form body.
