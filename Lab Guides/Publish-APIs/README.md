@@ -467,10 +467,12 @@ for Apigee Edge.
   a. Return to the Edge UI.  Be sure to select your API Proxy. Click the Trace tab.
      Then Start a Trace session for your proxy.
 
-  b. From the devportal tab, copy (Ctrl-C) the Consumer Secret string. 
-  
+  b. From the devportal tab, copy (Ctrl-C) the Consumer Key string. (NOT the Consumer Secret.)
+
   c. From Postman send the ‘/GET hotels’ request, with the following query parameters:  
   `zipcode=98101&radius=200&apikey={apikey}`
+
+    Replace the apikey query param with your actual apikey, aka Consumer Key.
 
   d. You should see a successful response.
 
@@ -510,7 +512,8 @@ Let's explore that now.
   So, as a first step, Ask your instructor to change your developer user to have
   administrator access in the devportal.
 
-2. In the browser tab showing the developer portal, Logout.  And then Signin again.
+2. In the browser tab showing the developer portal, refresh the page.
+  You will not have to Logout, and then Signin again.
 
   You will now notice a black navigation bar at the top of the browser page.
   This is the administrative menu; it is visible only to users who are

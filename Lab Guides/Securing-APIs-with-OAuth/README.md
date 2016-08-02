@@ -522,7 +522,7 @@ If you wish to epxlore the ability to check token scopes during validation, you 
 2. Create a new keypair in the developer portal
 
 2. Use postman to obtain a new token via password grant, with those
-  client credentials, and using your fgirst name and last name (all
+  client credentials, and using your first name and last name (all
   lowercase) as user credentials. Example: 
 
   ```
@@ -551,7 +551,7 @@ If you wish to epxlore the ability to check token scopes during validation, you 
   own bearer token, obtained in step 2 above, within the Authorization header of the request.
 
 4. Try with other usernames, and you will get tokens with different
-  scopes. Run the same tests (/t1, t2, t3, t4) with those other tokens to
+  scopes. Run the same tests (/t1, /t2, /t3, /t4) with those other tokens to
   see how the behavior changes.
 
 5. You can examine the API Proxy design inside the Apigee Edge Administrative UI.
