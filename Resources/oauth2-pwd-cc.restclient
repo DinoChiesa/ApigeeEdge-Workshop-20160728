@@ -31,7 +31,8 @@ grant_type=client_credentials
 
 :dpc3_cctoken = U7EEhqkoke12CCTO31veNERMdmui
 :dpc3_pwtoken = neWETVkdM7VZxefAaE7KsZpi1sR1
-:dpc4_pwtoken = y3OISiBVGTMhp8GG4JYroAmvxJLY
+:dpc4_pwtoken = FZq8j3JgdF05UjlfWGAJydcHwPgo
+:old_dpc4_token = y3OISiBVGTMhp8GG4JYroAmvxJLY
 
 GET :apiserver/v1/oauth-resources/t1
 Authorization: Bearer :dpc4_pwtoken

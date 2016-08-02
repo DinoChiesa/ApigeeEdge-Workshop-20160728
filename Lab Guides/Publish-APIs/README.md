@@ -470,7 +470,7 @@ for Apigee Edge.
   b. From the devportal tab, copy (Ctrl-C) the Consumer Key string. (NOT the Consumer Secret.)
 
   c. From Postman send the ‘/GET hotels’ request, with the following query parameters:  
-  `zipcode=98101&radius=200&apikey={apikey}`
+    `zipcode=98101&radius=200&apikey={apikey}`
 
     Replace the apikey query param with your actual apikey, aka Consumer Key.
 
@@ -639,12 +639,12 @@ After rendering SmartDocs, the next step is to embed the links to these
 generated doc pages into the other pages of the developer portal.
 
 The links for your published SmartDocs will automatically be included into the
-index. Page.
+index page.
 
 In the Developer Portal, click the APIs link in the top navbar, and you
-should see a page that shows the smartdocs.  You may wish to augment 
+should see a page that shows the smartdocs.  In a real developer portal, you may wish to augment 
 that list with some other guidance information about the
-APIs available on your portal. 
+APIs available on your portal. We won't do that in this exercise. 
 
 ![](./media/list-of-documented-apis.png)
 

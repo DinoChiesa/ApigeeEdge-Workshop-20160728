@@ -4,7 +4,7 @@
   <CreatedBy>dino</CreatedBy>
   <Description>Dispense OAuth v2.0 Bearer tokens for password and client_credentials grant_types. In this proxy, the user authentication is handled by a mock service.</Description>
   <DisplayName>oauth2-pwd-cc</DisplayName>
-  <LastModifiedAt>1470151332888</LastModifiedAt>
+  <LastModifiedAt>1470174789246</LastModifiedAt>
   <LastModifiedBy>orgAdmin</LastModifiedBy>
   <TargetEndpoints>
     <TargetEndpoint>default</TargetEndpoint>

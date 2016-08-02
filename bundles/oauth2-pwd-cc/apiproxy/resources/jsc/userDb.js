@@ -14,7 +14,7 @@
 // -Dino
 //
 // created: Fri Mar 25 20:01:12 2016
-// last saved: <2016-July-29 21:48:37>
+// last saved: <2016-August-02 14:53:06>
 
 var userDb = {
       carrie : { // carson
@@ -27,11 +27,11 @@ var userDb = {
       },
       justin: { // madalone
         hash : 'd209a2e0db7bcafea8c091c7f05ee2240c84e65d76a93921d715360d83a62412',
-        roles: ['read']
+        roles: ['write']
       },
       matthew: { // palmgren
         hash : 'd8c3e0826881ca90b4d4f0cad25206ea10a1afd41c1d9e14127a2c80d6b98281',
-        roles: ['read']
+        roles: ['read', 'write']
       },
       matt: { // mcsweyn
         hash : '423afd952352b79a46e3d8bfbab2107d41f2f454d8cc7954bd6f92dfa95ff268',
@@ -43,7 +43,11 @@ var userDb = {
       },
       edward: { // cerruti
         hash : 'cb04f684e706bf6a5242cf7362d1a5a55ba16c47c59492bc192c0ca870f2c60b',
-        roles: ['read']
+        roles: ['delete']
+      },
+      akshay: { // sahai
+        hash : '668b8f1fe39147f1421dfb159c6d3ef622c956389720619aa12315ca8cc5729c',
+        roles: ['delete']
       },
       dino: { // chiesa
         hash : '3052eb6f7bae7493e012033c995b4942026098ddc1c2748e3a17503ed5470097',
