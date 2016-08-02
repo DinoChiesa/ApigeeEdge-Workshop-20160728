@@ -34,25 +34,21 @@ grant_type=client_credentials
 :dpc4_pwtoken = y3OISiBVGTMhp8GG4JYroAmvxJLY
 
 GET :apiserver/v1/oauth-resources/t1
-content-type: application/x-www-form-urlencoded
 Authorization: Bearer :dpc4_pwtoken
 
 # test the token t2 - check for Write scope
 
 GET :apiserver/v1/oauth-resources/t2
-content-type: application/x-www-form-urlencoded
 Authorization: Bearer :dpc4_pwtoken
 
 # test the token t3 - check for Delete scope
 
 GET :apiserver/v1/oauth-resources/t3
-content-type: application/x-www-form-urlencoded
 Authorization: Bearer :dpc4_pwtoken
 
 # test the token t4 - check for "otherscope"
 
 GET :apiserver/v1/oauth-resources/t4
-content-type: application/x-www-form-urlencoded
 Authorization: Bearer :dpc4_pwtoken
 
 

@@ -435,22 +435,29 @@ Done! OK, Let's test it.
   Edge organization. It's ready and available for you to use. 
 
   You must obtain an OAuth token by calling the ’oauth’ API proxy token endpoint,
-  passing the consumer key and consumer secret of the app you have
-  registered on the developer portal.
+  passing in a valid consumer key and consumer secret pair. The *Existing* key pair of the app you have
+  registered on the developer portal will be insufficient, as it was added to the product
+  before it was modified. So, 
 
-  a. Using Postman, send the `POST /token’ request.
+  a. Using the developer portal, create a new App, and retrieve a new key pair.
   
     You will need to specify both the consumer_key and consumer_secret (aka client_id
     and client_secret) in the appropriate places in the form body.
 
+  b. Using Postman, send the `POST /token’ request.
+  
+    You will need to specify both the consumer_key and consumer_secret (aka client_id
+    and client_secret) in the appropriate places in the form body. Use the values from the new app. 
+
     Copy-paste the Consumer Key and Consumer Secret from the
     developer portal, or from the Edge Admin UI. As you copy-paste, remove any
     spaces before and after the values of the Consumer Key and Consumer Secret.
+    Remember: Use the values from the newly-created app. 
 
     ![](./media/postman-click-specify-send.png)
     
 
-  b. Review the response of the `POST /token` request. The response should look like this:
+  c. Review the response of the `POST /token` request. The response should look like this:
     
     ![](./media/postman-token-response.png)
 
@@ -504,6 +511,38 @@ Done! OK, Let's test it.
 
 11. Switch to the Edge UI, and review the Trace for the proxy and the returned
     response to ensure that the flow is working as expected.
+
+
+## Extra Credit
+
+If you wish to epxlore the ability to check token scopes during validation, you can try this:
+
+1. Add the `oauth2-pwd-cc` API Proxy to *your* API Product.
+
+2. Create a new keypair in the developer portal
+
+2. Use postman to obtain a new token via password grant, with those
+  client credentials, and using your fgirst name and last name (all
+  lowercase) as user credentials. Example: 
+
+  ```
+  POST :apiserver/v1/oauth2-pwd-cc/token
+  content-type: application/x-www-form-urlencoded
+  Authorization: Basic base64(client_id:client_secret)
+
+  grant_type=password&username=dino&password=chiesa
+  ```
+
+3. Invoke this target: `GET /v1/oauth-resources/t2` passing in an authorization header . Example: 
+
+  ```
+  GET :apiserver/v1/oauth-resources/t2
+  Authorization: Bearer :dpc4_pwtoken
+  ```
+
+  The `/t1` path checks for `read` scope. The /t2 path checks for
+  `write` scope.  Also try the `/t3` path, which checks for `delete`
+  scope.
 
 
 
